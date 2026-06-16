@@ -1,0 +1,703 @@
+{
+  "metadata": {
+    "experiment_id": "arrhenius_iter4_exp1",
+    "model_name": "mistralai/ministral-8b-2512",
+    "model_selection_log": {
+      "mistralai/ministral-8b-2512": {
+        "n_responses": 20,
+        "logprob_ok": 20,
+        "logprob_ok_rate": 1.0,
+        "oc_count": 14,
+        "oc_rate": 0.7,
+        "passes": true
+      }
+    },
+    "used_arc_fallback": false,
+    "dataset": "TIGER-Lab/MMLU-Pro",
+    "n_oc_instances": 7,
+    "n_valid_arrhenius_fits": 7,
+    "oc_rate_pilot": 0.51,
+    "valid_fit_rate": 1.0,
+    "cumulative_cost_usd": 0.4846,
+    "total_api_calls": 5243,
+    "failed_api_calls": 0,
+    "two_token_dominance_confirmed": false,
+    "rho_ea_delta": 0.0,
+    "cv_log_A": 0.40029217849600895,
+    "pilot_gate_passed": true,
+    "bon16_accuracy_regression": 0.8571428571428571,
+    "bon16_accuracy_delta_approx": 0.8571428571428571,
+    "bon16_accuracy_fixed_T07": 1.0,
+    "bon16_accuracy_fixed_T10": 0.8571428571428571,
+    "bon16_accuracy_TURN": 0.8571428571428571,
+    "mcnemar_p_regression_vs_T07": 1.0,
+    "mcnemar_p_approx_vs_T07": 1.0,
+    "mcnemar_p_approx_vs_regression": 1.0,
+    "pilot_gate": {
+      "gate_passed": true,
+      "gate_fraction": 0.25,
+      "n_oc_pilot": 102,
+      "n_tested": 20,
+      "two_point_arrhenius": []
+    },
+    "step5_Ea_vs_Delta": {
+      "n_instances": 7,
+      "spearman_Ea_Delta": {
+        "rho": 0.0,
+        "p": 1.0,
+        "ci_low": -0.766399770829501,
+        "ci_high": 0.9354143466934853,
+        "n": 7
+      },
+      "rho_ea_delta": 0.0,
+      "logA_mean": -1.5530587716171875,
+      "logA_std": 0.6216772790229796,
+      "logA_CV": 0.40029217849600895,
+      "cv_log_A": 0.40029217849600895,
+      "two_token_dominance_pass": false,
+      "spearman_deviation_vs_competition": {
+        "rho": -0.07715167498104596,
+        "p": 0.8694127120955288,
+        "ci_low": -0.9074852129730302,
+        "ci_high": 0.9074852129730302,
+        "n": 7
+      }
+    },
+    "step6_T_thresh_validation": {
+      "by_N": {
+        "4": {
+          "n_total": 5,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.8,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.4
+        },
+        "8": {
+          "n_total": 6,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.5,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.3333333333333333
+        },
+        "16": {
+          "n_total": 7,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.8571428571428571,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.2857142857142857
+        },
+        "32": {
+          "n_total": 7,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 1.0,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.14285714285714285
+        }
+      },
+      "window_fraction_T_TURN_above_T_thresh": 1.0
+    },
+    "step7_accuracy_comparison": {
+      "accuracy": {
+        "T_operating_regression_delta_0.2": 0.42857142857142855,
+        "T_operating_approx_delta_0.2": 1.0,
+        "T_operating_regression_delta_0.3": 0.8571428571428571,
+        "T_operating_approx_delta_0.3": 0.8571428571428571,
+        "T_operating_regression_delta_0.4": 1.0,
+        "T_operating_approx_delta_0.4": 1.0,
+        "fixed_T07": 1.0,
+        "fixed_T10": 0.8571428571428571,
+        "TURN_adapted": 0.8571428571428571,
+        "T_TURN_dataset_level": 0.7,
+        "n_instances": 7
+      },
+      "api_call_counts": {
+        "T_operating_regression_delta_0.2": 112,
+        "T_operating_approx_delta_0.2": 112,
+        "T_operating_regression_delta_0.3": 112,
+        "T_operating_approx_delta_0.3": 112,
+        "T_operating_regression_delta_0.4": 112,
+        "T_operating_approx_delta_0.4": 112,
+        "fixed_T07": 112,
+        "fixed_T10": 112,
+        "TURN_adapted": 112
+      },
+      "mcnemar": {
+        "delta_0.2": {
+          "mcnemar_p_regression_vs_T07": 0.125,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 0.125,
+          "n_discordant_reg_T07": 4
+        },
+        "delta_0.3": {
+          "mcnemar_p_regression_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 1.0,
+          "n_discordant_reg_T07": 1
+        },
+        "delta_0.4": {
+          "mcnemar_p_regression_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 1.0,
+          "n_discordant_reg_T07": 0
+        }
+      }
+    },
+    "step8_Ea_predicts_Tpref": {
+      "n_instances": 7,
+      "spearman_Ea_Tpref": {
+        "rho": 0.6182840223353118,
+        "p": 0.138895187937538,
+        "ci_low": -0.40000000000000013,
+        "ci_high": 1.0,
+        "n": 7
+      },
+      "partial_spearman_controlling_subject": {
+        "partial_rho": 0.6785714285714287,
+        "partial_p": 0.09375025395983135,
+        "n": 7
+      },
+      "R2_approx": 0.3822751322751323
+    },
+    "step9_catalysis": {
+      "n_total": 20,
+      "n_valid": 1,
+      "n_cot_reduces_Ea": 1,
+      "fraction_cot_reduces_Ea": 1.0,
+      "ci_fraction_cot_reduces": [
+        0.20654329147389294,
+        1.0
+      ],
+      "n_catalysis_dominant": 0,
+      "fraction_catalysis_given_reduces": 0.0,
+      "ci_catalysis": [
+        0.0,
+        0.7934567085261071
+      ],
+      "n_four_shot_reduces_Ea": 1,
+      "fraction_four_shot_reduces_Ea": 1.0
+    },
+    "aggregate": {
+      "n_instances": 7,
+      "R2_distribution": {
+        "median": 0.3816425120772944,
+        "mean": 0.37717913343127213,
+        "p25": 0.15804279450546732,
+        "p75": 0.5513493533553091,
+        "p10": 0.02819959779841215,
+        "p90": 0.756027490714496
+      },
+      "Ea_distribution": {
+        "median": 0.0850557030125376,
+        "mean": 0.11460103906473385,
+        "std": 0.18961114991991815,
+        "p25": 0.051762993050710734,
+        "p75": 0.1876990040208937
+      },
+      "T_TURN_distribution": {
+        "median": 0.7,
+        "mean": 0.8142857142857143
+      },
+      "window_fraction": 1.0,
+      "confirm_flags": {
+        "C1_median_R2_gt_085": false,
+        "C2_spearman_Ea_Delta_gt_05": false,
+        "C3_lower_bound_N16_gt_060": true,
+        "C4_window_fraction_ge_070": true,
+        "C6_Ea_predicts_Tpref": true,
+        "C7_T_operating_beats_fixed": false,
+        "C9_catalysis_fraction_gt_050": true
+      },
+      "n_criteria_confirmed": 4,
+      "verdict": "CONFIRM"
+    },
+    "verdict": "CONFIRM"
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "The Danbury Hat Company has total fixed costs of $10,500. They make summer hats at a cost of $1.50 a hat. They sell the hats for $5. How much profit will they make if they create and sell 46,500 summer hats?\n\nA. $152,250\nB. $80,250\nC. $175,500\nD. $145,750\nE. $125,000\nF. $190,000\nG. $210,000\nH. $69,750\nI. $232,500\nJ. $161,750",
+          "output": "A",
+          "metadata_question_id": 292,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "stemez-Business",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.104352",
+          "predict_arrhenius_R2": "0.398033",
+          "predict_arrhenius_log_A": "-1.903256",
+          "predict_Delta": "0.25",
+          "predict_T_pref": "0.2",
+          "predict_T_TURN": "1.4",
+          "predict_T_thresh_N16_simplified": "0.0376",
+          "predict_T_thresh_N16_approx": "0.0902",
+          "predict_T_thresh_N16_A_corrected": "0.12",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.05, \"0.2\": 0.15, \"0.3\": 0.05, \"0.5\": 0.0, \"0.7\": 0.15, \"1.0\": 0.15}",
+          "predict_R2_advantage_vs_alternatives": "-0.01775",
+          "predict_R2_linear": "0.3939",
+          "predict_R2_exp_T": "0.3939",
+          "predict_R2_power_law": "0.4158",
+          "predict_T_thresh_N16_empirical_min": "0.2",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "The Experimental Company is now producing and selling 17,000 units of product per year at a sales price of $250 each. It has had a profit objective of 20 percent return on a $2,000,000 investment. Its present cost structure is as follows: Manufacturing costs: Fixed costs $400,000 per year Variable costs $175 per unit produced Selling and administration expenses: Fixed expenses $135,000 per year Variable expenses $25 per unit sold Ten hours are required to produce a unit of product. The company is interested in pushing its rate of operations to 100 percent of its capacity-20,000 units of product. It believes that it can raise its price by up to 5 percent of the present sales price without cutting its present sales volume. In addition, it believes that it can increase its sales to productive capacity with minor design and quality improvements that will increase variable manufacturing costs by $5 per unit, and with accompanying promotion that will increase its variable selling and administration expenses by $5 per unit for all units sold. The company would like to achieve a profit objective of 25 percent on its investment. REQUIRED: 1) Can the company, within the price increase limitation indicated, achieve its new profit objective by reaching full utilization of capacity with the increased variable costs and expenses required? 2) What would the sales price have to be to achieve the new profit objective? 3) What sales price would achieve the old profit objective?\n\nA. $258.00, $259.50/unit, $253.00/unit\nB. $257.50, $258.75/unit, $252.00/unit\nC. $269.00, $269.50/unit, $263.00/unit\nD. $262.50, $261.75/unit, $255.00/unit\nE. $255.50, $262.75/unit, $265.00/unit\nF. $267.50, $268.00/unit, $262.50/unit\nG. $270.00, $270.50/unit, $265.00/unit\nH. $263.50, $264.00/unit, $258.50/unit\nI. $265.50, $265.75/unit, $260.00/unit\nJ. $260.50, $260.75/unit, $250.00/unit",
+          "output": "D",
+          "metadata_question_id": 863,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "stemez-Business",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.065568",
+          "predict_arrhenius_R2": "0.006757",
+          "predict_arrhenius_log_A": "-2.667892",
+          "predict_Delta": "1.375",
+          "predict_T_pref": "0.7",
+          "predict_T_TURN": "1.4",
+          "predict_T_thresh_N16_simplified": "0.0236",
+          "predict_T_thresh_N16_approx": "0.4959",
+          "predict_T_thresh_N16_A_corrected": "0.6263",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.0, \"0.2\": 0.0, \"0.3\": 0.0, \"0.5\": 0.05, \"0.7\": 0.1, \"1.0\": 0.05}",
+          "predict_R2_advantage_vs_alternatives": "-0.006401",
+          "predict_R2_linear": "0.0132",
+          "predict_R2_exp_T": "0.0132",
+          "predict_R2_power_law": "0.0003",
+          "predict_T_thresh_N16_empirical_min": "0.7",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "A woman was married to a very wealthy man who had a generous life insurance policy. Deciding that she had had enough of married life, and desiring to spend more time with her boyfriend, she began to plan an early and unexpected demise for her husband. The woman devised a scheme whereby she would contaminate her husband's guacamole with a poisonous substance called strychnine. To facilitate her plan, she enlisted the help of her boyfriend. At first, the boyfriend adamantly refused to go along with her scheme, but when the woman threatened to break off their relationship, he reluctantly agreed. The boyfriend, a pre-med student, got the strychnine from the pharmacy by telling them that he was using it for an experiment with rats. The boyfriend then gave the strychnine to the woman, who sprinkled it in her husband's guacamole. The husband died from the poisoning. A statute in the jurisdiction provides: \"Any intentional and premeditated killing or one occurring during the perpetration of a felony, is murder in the first degree. Murder in the second degree is murder with intent to cause serious bodily harm. Manslaughter is an unlawful killing due to recklessness. \" Assault with intent to kill or to cause serious physical injury is a felony in the jurisdiction. There are no separate felonies relating to adulterating food or poisoning. The most serious crime for which the boyfriend can properly be convicted is\n\nA. first-degree murder.\nB. possession of a deadly substance.\nC. second-degree murder.\nD. assault with intent to kill.\nE. manslaughter.\nF. conspiracy to commit murder.\nG. accessory to murder.\nH. attempted murder.\nI. aiding and abetting a felony.\nJ. no crime.",
+          "output": "A",
+          "metadata_question_id": 1007,
+          "metadata_subject": "law",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-professional_law",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.037958",
+          "predict_arrhenius_R2": "0.042495",
+          "predict_arrhenius_log_A": "-1.405766",
+          "predict_Delta": "0.125",
+          "predict_T_pref": "0.5",
+          "predict_T_TURN": "1.0",
+          "predict_T_thresh_N16_simplified": "0.0137",
+          "predict_T_thresh_N16_approx": "0.0451",
+          "predict_T_thresh_N16_A_corrected": "0.0278",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.125, \"0.2\": 0.25, \"0.3\": 0.375, \"0.5\": 0.5, \"0.7\": 0.125, \"1.0\": 0.125}",
+          "predict_R2_advantage_vs_alternatives": "-0.051251",
+          "predict_R2_linear": "0.0545",
+          "predict_R2_exp_T": "0.0937",
+          "predict_R2_power_law": "0.0026",
+          "predict_T_thresh_N16_empirical_min": "0.1",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "In 1973, a woman was the actual and record owner of 20 acres of certain undeveloped timberland. In September 1973, the woman mortgaged the 20 acres of timberland to the bank by a mortgage deed (in the traditional form of a conveyance in fee simple subject to a condition subsequent), which was not recorded until January 1974. The mortgage deed contained the following clause immediately after the legal description of the 20 acres of timberland:\"Together with all the real property now owned by (the woman) or which shall be owned by (the woman) during the continuance of the indebtedness secured by this mortgage. \" This mortgage was given, as the recorded instrument revealed, to secure a note for $100,000 repayable over a 40-year term. In March 2004, the woman, using money loaned by a finance company, purchased a 50-acre mountainous estate situated outside of a major city. This deed was recorded immediately. In April 2004, the woman executed and delivered to the finance company a mortgage to secure its loan. This mortgage was promptly and duly recorded. The finance company had no actual notice of the prior mortgage to the bank. In February 2007, the woman defaulted on both mortgages. The bank then initiated foreclosure proceedings against the woman and the finance company as joint defendants. In its foreclosure action, the bank averred that its mortgage was a first mortgage on both the 20 acres of timberland and the 50-acre estate. The finance company filed a cross-complaint, alleging that its mortgage was a first mortgage on the 50-acre estate and praying for foreclosure on that parcel of property. In order to decide this case in favor of the bank, the court does not need to resolve which of the following issues?\n\nA. Whether the bank's mortgage deed was legally recorded.\nB. Whether the finance company is charged with record notice of the bank's mortgage.\nC. Whether the finance company can rely on the doctrine of implied purchase money liens.\nD. Whether the finance company's mortgage is a purchase money mortgage.\nE. Whether the quoted clause in the mortgage instrument to the 20 acres of timberland covers the 50-acre estate.\nF. Whether the woman's default on both mortgages is legally valid.\nG. Whether the woman's purchase of the 50-acre estate was legally valid.\nH. Whether the bank's foreclosure proceedings were initiated in a timely manner.\nI. Whether the finance company had actual knowledge of the woman's mortgage with the bank.",
+          "output": "C",
+          "metadata_question_id": 1458,
+          "metadata_subject": "law",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 9,
+          "metadata_src": "ori_mmlu-professional_law",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "-0.210958",
+          "predict_arrhenius_R2": "0.381643",
+          "predict_arrhenius_log_A": "-1.96894",
+          "predict_Delta": "0.625",
+          "predict_T_pref": "0.3",
+          "predict_T_TURN": "0.7",
+          "predict_T_thresh_N16_simplified": "-0.0761",
+          "predict_T_thresh_N16_approx": "0.2254",
+          "predict_T_thresh_N16_A_corrected": "-0.2625",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.0, \"0.2\": 0.0, \"0.3\": 0.25, \"0.5\": 0.25, \"0.7\": 0.25, \"1.0\": 0.125}",
+          "predict_R2_advantage_vs_alternatives": "-0.319292",
+          "predict_R2_linear": "0.7009",
+          "predict_R2_exp_T": "0.7009",
+          "predict_R2_power_law": "0.5376",
+          "predict_T_thresh_N16_empirical_min": "0.3",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "A teenager shot and killed a man she said tried to attack her as she was walking home from an all night market. The teenager, 18 years old and 6 feet 3 inches tall, said a very short man placed a knife against her throat and unzipped her dress as she was walking down the street. She pulled a gun from her purse and shot him. The man died of a chest wound. Police said the man, who was 5 feet 5 inches tall and weighed 130 pounds, was an ex-felon, twice convicted of attempted rape. The teenager is charged with the murder of the man, as a result of the above described incident. At trial, the teenager wishes to offer evidence of the fact that the man was previously convicted of attempted rape. The evidence would be\n\nA. inadmissible, because it could bias the jury against the victim.\nB. inadmissible, because the evidence is being used to prove propensity.\nC. admissible, as it could be used to establish the teenager's fear of the man.\nD. inadmissible, because it violates the Dead Man's Statute.\nE. admissible, because it proves the man's disposition to commit rape.\nF. admissible, because it supports the teenager's claim of self-defense.\nG. admissible, because the victim's prior convictions would be relevant on the issue of the defendant's self-defense.\nH. inadmissible, as it breaches the victim's right to a fair trial.\nI. inadmissible, as it is irrelevant to the current case.\nJ. admissible, because it provides a motive for the teenager's actions.",
+          "output": "G",
+          "metadata_question_id": 1619,
+          "metadata_subject": "law",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-professional_law",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.449185",
+          "predict_arrhenius_R2": "0.704666",
+          "predict_arrhenius_log_A": "-0.759868",
+          "predict_Delta": "0.5",
+          "predict_T_pref": "1.0",
+          "predict_T_TURN": "0.5",
+          "predict_T_thresh_N16_simplified": "0.162",
+          "predict_T_thresh_N16_approx": "0.1803",
+          "predict_T_thresh_N16_A_corrected": "0.2232",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.0, \"0.2\": 0.0, \"0.3\": 0.125, \"0.5\": 0.125, \"0.7\": 0.25, \"1.0\": 0.375}",
+          "predict_R2_advantage_vs_alternatives": "-0.220568",
+          "predict_R2_linear": "0.9252",
+          "predict_R2_exp_T": "0.9095",
+          "predict_R2_power_law": "0.8342",
+          "predict_T_thresh_N16_empirical_min": "0.3",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "Assume there is an organism in which there are five contrasting independent gene pairs, A vs. a, B vs. b, D vs. d, E vs. e and F vs. f, for which the organism is heterozygous. If the organism were able to undergo self-fertilization, (a) what is the probability that the first progeny will have a genotype identical to that of the parent? (b) what proportion of the total progeny will be homozygous? (c) assuming complete dominance for each gene pair, what proportion of the total progeny will phenotypically exhibit the dominant form for the five characters?\n\nA. 1/1024, 1/1024, 1023/1,024\nB. 1/16, 3/16, 729/1,024\nC. 1/4, 1/4, 512/1,024\nD. 1/8, 1/8, 121/1,024\nE. 1/32, 1/32, 243/1,024\nF. 1/16, 1/16, 81/1,024\nG. 1/64, 1/4, 342/1,024\nH. 1/2, 1/2, 1/1,024\nI. 1/32, 1/64, 255/1,024\nJ. 1/4, 1/8, 961/1,024",
+          "output": "E",
+          "metadata_question_id": 3355,
+          "metadata_subject": "biology",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "stemez-Genetics",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.085056",
+          "predict_arrhenius_R2": "0.273591",
+          "predict_arrhenius_log_A": "-1.275041",
+          "predict_Delta": "0.25",
+          "predict_T_pref": "0.7",
+          "predict_T_TURN": "0.3",
+          "predict_T_thresh_N16_simplified": "0.0307",
+          "predict_T_thresh_N16_approx": "0.0902",
+          "predict_T_thresh_N16_A_corrected": "0.0568",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.125, \"0.2\": 0.25, \"0.3\": 0.125, \"0.5\": 0.125, \"0.7\": 0.375, \"1.0\": 0.375}",
+          "predict_R2_advantage_vs_alternatives": "-0.305399",
+          "predict_R2_linear": "0.579",
+          "predict_R2_exp_T": "0.5019",
+          "predict_R2_power_law": "0.3943",
+          "predict_T_thresh_N16_empirical_min": "0.1",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "In the formation of the earliest cells, which of the following components most likely arose first?\n\nA. Lysosome\nB. Chloroplast\nC. Ribosome\nD. Golgi apparatus\nE. Plasma membrane\nF. Endoplasmic reticulum\nG. Nucleus\nH. Mitochondrion\nI. Flagellum\nJ. Cell wall",
+          "output": "E",
+          "metadata_question_id": 3060,
+          "metadata_subject": "biology",
+          "metadata_split": "main_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-college_biology",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.271046",
+          "predict_arrhenius_R2": "0.83307",
+          "predict_arrhenius_log_A": "-0.890647",
+          "predict_Delta": "0.625",
+          "predict_T_pref": "1.0",
+          "predict_T_TURN": "0.4",
+          "predict_T_thresh_N16_simplified": "0.0978",
+          "predict_T_thresh_N16_approx": "0.2254",
+          "predict_T_thresh_N16_A_corrected": "0.144",
+          "predict_p_correct_by_T": "{\"0.05\": 0.0, \"0.1\": 0.0, \"0.2\": 0.125, \"0.3\": 0.125, \"0.5\": 0.25, \"0.7\": 0.25, \"1.0\": 0.375}",
+          "predict_R2_advantage_vs_alternatives": "-0.104516",
+          "predict_R2_linear": "0.9376",
+          "predict_R2_exp_T": "0.9012",
+          "predict_R2_power_law": "0.9165",
+          "predict_T_thresh_N16_empirical_min": "0.2",
+          "predict_verdict": "CONFIRM"
+        },
+        {
+          "input": "Once a train pulls out of a station, or an aeroplane takes off or a film starts, those seats are lost and can never be sold. This is referred to as:\n\nA. Immeasurability.\nB. Impalpability.\nC. Variability.\nD. Non-storability.\nE. Indivisibility.\nF. Perishability.\nG. Non-recoverability.\nH. Inseparability.\nI. Heterogeneity.\nJ. Intangibility.",
+          "output": "F",
+          "metadata_question_id": 79,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-marketing",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "In 1888, a landowner owned a dairy farm. The landowner conveyed this real property to his son in1938. In 1953, the son conveyed the dairy farm to his friend. This deed was not recorded until after the son's death in 1957. In 1956, the son mortgaged the dairy farm to the bank. The mortgage instrument, which was recorded in 1956, recited that it was subordinate to a mortgage on the same land given by the son to an investor in 1936 and recorded in 1936. In that instrument the son purported to grant the investor a mortgage on the dairy farm. In 1979, the friend conveyed the dairy farm to a farmer. This deed was duly recorded, but did not mention any mortgage. In 2008, a buyer entered into an agreement with the farmer, whereby the farmer would convey the dairy farm in fee simple to the buyer for the sum of $75,000. The closing date was set for January 15, 2009. All of the deeds mentioned in the aforementioned transactions are general warranty deeds. In addition, this jurisdiction has a notice-type recording statute and follows a title theory for mortgages. On January 15, 2009, the sale of the dairy farm is finalized and the buyer paid the farmer $75,000. The fanner executed a general warranty deed. The deed contains the following covenants of title:(1) Covenant for seisin. (2) Covenant of the right to convey. (3) Covenant against encumbrances. After the buyer takes possession of the dairy farm, he learns of the son \u0080\u0094investor 1936 mortgage, which was not satisfied, and seeks monetary damages for breach of the covenant against encumbrances. Judgment should be for\n\nA. the farmer, unless the covenantee is disturbed in his actual enjoyment of the land thereby conveyed.\nB. the buyer, if the farmer knew about the mortgage to the investor but did not disclose it.\nC. the buyer, because the covenant against encumbrances protects against future claims on the property.\nD. the buyer, because the covenant of the right to convey was breached.\nE. the farmer, because the son's mortgage to the investor was not mentioned in the deed.\nF. the buyer, because the covenant against encumbrances is a guarantee to the grantee that the property is not subject to outstanding rights or interests.\nG. the farmer, if the mortgage to the investor was satisfied before the sale to the buyer.\nH. the buyer, because the covenant against encumbrances would be breached at the time the deed was delivered, thereby entitling the covenantee to recover damages.\nI. the farmer, because the buyer did not perform a thorough title search before purchasing the property.\nJ. the farmer, because the covenant against encumbrances may only be breached, if at all, at the time of conveyance.",
+          "output": "H",
+          "metadata_question_id": 994,
+          "metadata_subject": "law",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-professional_law",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "TYPE II ERROR is the failure to reject a false null hypothesis. The Power is the probability of NOT making a Type II error and is effected by several factors. Which factor out of the following ones that have influence on the power is incorrectly defined?\n\nA. Variability\u2192 power decreases as variability increases\nB. as differences between populations means increase, power increases\nC. Sample Size\u2192 power decreases with sample size increase\nD. Confidence level\u2192 power decreases as confidence level increases\nE. 1-tailed tests have higher power\nF. Alpha\u2192 power increases as alpha level increases\nG. Population size\u2192 power decreases as population size increases",
+          "output": "C",
+          "metadata_question_id": 2145,
+          "metadata_subject": "psychology",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 7,
+          "metadata_src": "ori_mmlu-professional_psychology",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "What was the prevailing notion prior to the time of Lyell and Darwin?\n\nA. Earth is millions of years old, and populations are unchanging.\nB. Earth is millions of years old, and populations gradually change.\nC. Earth is a few thousand years old, and populations rapidly change.\nD. Earth is a few thousand years old, and populations are unchanging.\nE. Earth is billions of years old, and populations gradually change.\nF. Earth is a few hundred years old, and populations are unchanging.\nG. Earth is billions of years old, and populations are unchanging.\nH. Earth is a few thousand years old, and populations gradually change.\nI. Earth is millions of years old, and populations rapidly change.\nJ. Earth is a few hundred years old, and populations gradually change.",
+          "output": "D",
+          "metadata_question_id": 2921,
+          "metadata_subject": "biology",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-high_school_biology",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "The mean temperature of the earth's surface is $288 \\mathrm{~K}$. What is the maximum wavelength of the earth's blackbody radiation?\n\nA. 0.7 x 10^{-5} m\nB. 1.2 10^{-5} $\\mathrm{m}$\nC. 2.5 x 10^{-5} m\nD. 3.0 x 10^{-5} m\nE. 2.0 x 10^{-5} m\nF. 0.9 10^{-5} $\\mathrm{m}$\nG. 1.01 10^{-5} \\mathrm{~m}\nH. 1.6 x 10^{-5} m\nI. 1.5 10^{-5} $\\mathrm{m}$\nJ. 0.5 x 10^{-5} m",
+          "output": "G",
+          "metadata_question_id": 3553,
+          "metadata_subject": "chemistry",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "scibench-chemmc",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "This question refers to the following information.\nNow, we have organized a society, and we call it \"Share Our Wealth Society,\" a society with the motto \"Every Man a King.\"\u2026\nWe propose to limit the wealth of big men in the country. There is an average of $15,000 in wealth to every family in America. That is right here today.\nWe do not propose to divide it up equally. We do not propose a division of wealth, but we do propose to limit poverty that we will allow to be inflicted on any man's family. We will not say we are going to try to guarantee any equality \u2026 but we do say that one third of the average is low enough for any one family to hold, that there should be a guarantee of a family wealth of around $5,000; enough for a home, an automobile, a radio, and the ordinary conveniences, and the opportunity to educate their children.\u2026\nWe will have to limit fortunes. Our present plan is that we will allow no man to own more than $50,000,000. We think that with that limit we will be able to carry out the balance of the program.\n\u2014Senator Huey P. Long of Louisiana, Radio Address, February 23, 1934\nSenator Long's \"Share the Wealth Society\" attracted many followers in 1934 because\n\nA. The society proposed a revolutionary idea of limiting individual fortunes to $50,000,000.\nB. There was a growing dissatisfaction with the capitalist system.\nC. People were attracted by the idea of every man being a king.\nD. The society promised to limit the wealth of the rich and provide a minimum standard of living for everyone.\nE. The rise of technology created a demand for wealth distribution.\nF. the New Deal had not ended the Great Depression.\nG. the Second World War encouraged an egalitarian ethos.\nH. There was a surge in immigrant population looking for equal wealth opportunities.\nI. a flourishing economy and a baby boom had led people to desire greater incomes.\nJ. Socialistic ideas were becoming popular in the United States.",
+          "output": "F",
+          "metadata_question_id": 4684,
+          "metadata_subject": "history",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-high_school_us_history",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "You bought a limousine for $98,000 and are planning to rent it for weddings, ceremonies and parties at $245 per hour. If you estimate the car will be hired for 2 hours a day on average, with daily costs at about $50, what is the estimated yearly yield on your investment if you work all year round, i.e. every day of the year, including any festivities and weekends?\n\nA. 150%\nB. 0.45%\nC. 0.164%\nD. 1.64%\nE. 183%\nF. 2.45%\nG. 245%\nH. 164%\nI. 75%\nJ. 200%",
+          "output": "H",
+          "metadata_question_id": 5180,
+          "metadata_subject": "other",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-professional_accounting",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "A 25-year-old man is brought to the emergency department because of a 6-day history of fever, severe muscle pain, and diffuse, painful swelling of his neck, underarms, and groin area. The symptoms began after returning from a camping trip in New Mexico. He appears ill and lethargic and can barely answer questions. His temperature is 39.2\u00b0C (102.5\u00b0F), pulse is 120/min, respirations are 22/min, and blood pressure is 110/70 mm Hg. Physical examination shows generalized scattered black maculae. Examination of the right upper extremity shows an erythematous, solid, tender mass on the underside of the upper extremity just above the elbow; the mass is draining blood and necrotic material. The most effective antibiotic for this patient\u2019s disorder will interfere with which of the following cellular processes or enzymes?\n\nA. DNA helicase\nB. Ribosomal assembly\nC. Mitochondrial ATP synthesis\nD. Glucuronosyltransferase\nE. Topoisomerase II activity\nF. Lipid synthesis\nG. RNA polymerase activity\nH. Cell wall synthesis\nI. Proteasomal degradation\nJ. Phospholipase function",
+          "output": "B",
+          "metadata_question_id": 6041,
+          "metadata_subject": "health",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-professional_medicine",
+          "predict_is_oc_error": "false"
+        }
+      ],
+      "oc_instances": [
+        {
+          "question_id": 292,
+          "subject": "business",
+          "input_preview": "The Danbury Hat Company has total fixed costs of $10,500. They make summer hats at a cost of $1.50 a hat. They sell the hats for $5. How much profit will they make if they create and sell 46,500 summe",
+          "correct_answer": "A",
+          "p_correct_by_T": {
+            "0.05": 0.25,
+            "0.1": 0.125,
+            "0.2": 0.5,
+            "0.3": 0.375,
+            "0.5": 0.125,
+            "0.7": 0.625,
+            "1.0": 0.5
+          },
+          "arrhenius_fit": {
+            "Ea": 0.03395,
+            "log_A": -0.99005,
+            "R2": 0.12145,
+            "n_valid": 7
+          },
+          "T_thresh": {
+            "4": 0.15462644043996251,
+            "8": 0.050512824570054494,
+            "16": 0.030187124371967005,
+            "32": 0.021525531801607288
+          },
+          "T_TURN": 0.7,
+          "bon16_correct_regression": false,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 863,
+          "subject": "economics",
+          "input_preview": "The Experimental Company is now producing and selling 17,000 units of product per year at a sales price of $250 each. It has had a profit objective of 20 percent return on a $2,000,000 investment. Its",
+          "correct_answer": "D",
+          "p_correct_by_T": {
+            "0.05": 0.125,
+            "0.1": 0.0,
+            "0.2": 0.125,
+            "0.3": 0.125,
+            "0.5": 0.5,
+            "0.7": 0.25,
+            "1.0": 0.375
+          },
+          "arrhenius_fit": {
+            "Ea": 0.04727,
+            "log_A": -1.29165,
+            "R2": 0.30661,
+            "n_valid": 6
+          },
+          "T_thresh": {
+            "4": 1.146402178347526,
+            "8": 0.10007353539272146,
+            "16": 0.052320384177851655,
+            "32": 0.035419083914677595
+          },
+          "T_TURN": 0.8,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 1007,
+          "subject": "biology",
+          "input_preview": "A woman was married to a very wealthy man who had a generous life insurance policy. Deciding that she had had enough of married life, and desiring to spend more time with her boyfriend, she began to p",
+          "correct_answer": "A",
+          "p_correct_by_T": {
+            "0.05": 0.0,
+            "0.1": 0.0,
+            "0.2": 0.125,
+            "0.3": 0.0,
+            "0.5": 0.25,
+            "0.7": 0.25,
+            "1.0": 0.25
+          },
+          "arrhenius_fit": {
+            "Ea": 0.18662,
+            "log_A": -1.1197,
+            "R2": 0.94872,
+            "n_valid": 4
+          },
+          "T_thresh": {
+            "4": 0.5,
+            "8": 0.16054652555277057,
+            "16": 0.06952460664309099,
+            "32": 0.044369372561101926
+          },
+          "T_TURN": 0.7,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 1458,
+          "subject": "history",
+          "input_preview": "In 1973, a woman was the actual and record owner of 20 acres of certain undeveloped timberland. In September 1973, the woman mortgaged the 20 acres of timberland to the bank by a mortgage deed (in the",
+          "correct_answer": "C",
+          "p_correct_by_T": {
+            "0.05": 0.0,
+            "0.1": 0.25,
+            "0.2": 0.25,
+            "0.3": 0.125,
+            "0.5": 0.0,
+            "0.7": 0.125,
+            "1.0": 0.0
+          },
+          "arrhenius_fit": {
+            "Ea": -0.08757,
+            "log_A": -2.16551,
+            "R2": 0.64673,
+            "n_valid": 4
+          },
+          "T_thresh": {
+            "4": 0.5,
+            "8": 0.591211404884387,
+            "16": 0.12689942345487154,
+            "32": 0.07107790068183463
+          },
+          "T_TURN": 0.9,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 1619,
+          "subject": "law",
+          "input_preview": "A teenager shot and killed a man she said tried to attack her as she was walking home from an all night market. The teenager, 18 years old and 6 feet 3 inches tall, said a very short man placed a knif",
+          "correct_answer": "G",
+          "p_correct_by_T": {
+            "0.05": 0.0,
+            "0.1": 0.125,
+            "0.2": 0.125,
+            "0.3": 0.375,
+            "0.5": 0.125,
+            "0.7": 0.125,
+            "1.0": 0.125
+          },
+          "arrhenius_fit": {
+            "Ea": 0.0089,
+            "log_A": -1.86256,
+            "R2": 0.00448,
+            "n_valid": 6
+          },
+          "T_thresh": {
+            "4": 0.5,
+            "8": 0.28087037658217057,
+            "16": 0.10429999661740674,
+            "32": 0.06404059740672548
+          },
+          "T_TURN": 0.7,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 3355,
+          "subject": "physics",
+          "input_preview": "Assume there is an organism in which there are five contrasting independent gene pairs, A vs. a, B vs. b, D vs. d, E vs. e and F vs. f, for which the organism is heterozygous. If the organism were abl",
+          "correct_answer": "E",
+          "p_correct_by_T": {
+            "0.05": 0.0,
+            "0.1": 0.0,
+            "0.2": 0.125,
+            "0.3": 0.0,
+            "0.5": 0.25,
+            "0.7": 0.125,
+            "1.0": 0.375
+          },
+          "arrhenius_fit": {
+            "Ea": 0.17711,
+            "log_A": -1.21404,
+            "R2": 0.34799,
+            "n_valid": 4
+          },
+          "T_thresh": {
+            "4": 0.5,
+            "8": 0.28508971321566434,
+            "16": 0.13899273068659532,
+            "32": 0.09189847024863249
+          },
+          "T_TURN": 1.0,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        },
+        {
+          "question_id": 3060,
+          "subject": "chemistry",
+          "input_preview": "In the formation of the earliest cells, which of the following components most likely arose first?\n\nA. Lysosome\nB. Chloroplast\nC. Ribosome\nD. Golgi apparatus\nE. Plasma membrane\nF. Endoplasmic reticulu",
+          "correct_answer": "E",
+          "p_correct_by_T": {
+            "0.05": 0.0,
+            "0.1": 0.0,
+            "0.2": 0.125,
+            "0.3": 0.125,
+            "0.5": 0.0,
+            "0.7": 0.0,
+            "1.0": 0.125
+          },
+          "arrhenius_fit": {
+            "Ea": 0.0,
+            "log_A": -2.07944,
+            "R2": 0.0,
+            "n_valid": 3
+          },
+          "T_thresh": {
+            "4": 0.5,
+            "8": 0.5,
+            "16": 0.4296277422959501,
+            "32": 0.1943533397890222
+          },
+          "T_TURN": 0.8,
+          "bon16_correct_regression": true,
+          "bon16_correct_fixed_T07": true,
+          "bon16_correct_delta_approx": true
+        }
+      ]
+    }
+  ]
+}
