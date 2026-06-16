@@ -1,0 +1,75 @@
+{
+  "proof_successful": true,
+  "verified": true,
+  "lean_code": "import Mathlib\n\nset_option maxHeartbeats 800000\n\nopen Real Finset\n\nnamespace ArrheniusLLM\n\n/-!\n  Formal verification that the softmax probability of the correct token follows\n  an Arrhenius-type law, with tight additive error bounds on log P ≈ -Ea/T.\n\n  Five theorems are proved:\n  1. two_token_prob_eq: exact two-token softmax formula P = exp(-Δ/T)/(1+exp(-Δ/T))\n  2. two_token_log_prob: log form log P = -Δ/T - log(1+exp(-Δ/T))\n  3. arrhenius_approx_bound: error bound -exp(-Δ/T) ≤ err ≤ 0\n  4. k_token_factorization: K-token P = A(T)·exp(-Ea/T)\n  5. log_A_nonpositive: log(A(T)) ≤ 0\n-/\n\nlemma log_one_add_le (x : ℝ) (hx : 0 ≤ x) : Real.log (1 + x) ≤ x := by\n  have h1 : 0 < 1 + x := by linarith\n  linarith [Real.log_le_sub_one_of_pos h1]\n\ntheorem two_token_prob_eq (lc lw T : ℝ) (hT : 0 < T) :\n    let Δ := lw - lc\n    exp (lc / T) / (exp (lc / T) + exp (lw / T)) =\n    exp (-(Δ / T)) / (1 + exp (-(Δ / T))) := by\n  simp only\n  have hD : 0 < exp (-((lw - lc) / T)) := exp_pos _\n  have hd : 0 < exp (lc / T) + exp (lw / T) := by\n    linarith [exp_pos (lc / T), exp_pos (lw / T)]\n  have hone : 0 < 1 + exp (-((lw - lc) / T)) := by linarith\n  have key : exp (lc / T) = exp (lw / T) * exp (-((lw - lc) / T)) := by\n    rw [← Real.exp_add]; congr 1; ring\n  rw [div_eq_div_iff hd.ne' hone.ne', key]; ring\n\ntheorem two_token_log_prob (lc lw T : ℝ) (hT : 0 < T) :\n    let Δ := lw - lc\n    Real.log (exp (lc / T) / (exp (lc / T) + exp (lw / T))) =\n    -(Δ / T) - Real.log (1 + exp (-(Δ / T))) := by\n  simp only\n  have hD_pos : 0 < exp (-((lw - lc) / T)) := exp_pos _\n  have hone_pos : 0 < 1 + exp (-((lw - lc) / T)) := by linarith\n  rw [two_token_prob_eq lc lw T hT, Real.log_div hD_pos.ne' hone_pos.ne', Real.log_exp]\n\ntheorem arrhenius_approx_bound (lc lw T : ℝ) (hT : 0 < T) (hlcw : lc < lw) :\n    let Δ := lw - lc\n    let p := exp (lc / T) / (exp (lc / T) + exp (lw / T))\n    let err := Real.log p - (-(Δ / T))\n    ((-exp (-(Δ / T)) ≤ err) ∧ (err ≤ 0)) := by\n  simp only\n  have hD_pos : 0 < exp (-((lw - lc) / T)) := exp_pos _\n  rw [two_token_log_prob lc lw T hT]\n  constructor\n  · linarith [log_one_add_le (exp (-((lw - lc) / T))) hD_pos.le]\n  · linarith [Real.log_nonneg (by linarith : (1 : ℝ) ≤ 1 + exp (-((lw - lc) / T)))]\n\nlemma sum_split_two_elems {K : ℕ} (f : Fin K → ℝ) (w c : Fin K) (hwc : w ≠ c) :\n    ∑ k : Fin K, f k =\n    f w + f c + ∑ k : Fin K, if k ≠ w ∧ k ≠ c then f k else 0 := by\n  have hw_mem : w ∈ (Finset.univ : Finset (Fin K)) := Finset.mem_univ w\n  have hc_erased : c ∈ (Finset.univ : Finset (Fin K)).erase w :=\n    Finset.mem_erase.mpr ⟨hwc.symm, Finset.mem_univ c⟩\n  have step1 : ∑ k : Fin K, f k =\n      f w + ∑ k ∈ (Finset.univ : Finset (Fin K)).erase w, f k := by\n    rw [add_comm]; exact (Finset.sum_erase_add _ f hw_mem).symm\n  have step2 : ∑ k ∈ (Finset.univ : Finset (Fin K)).erase w, f k =\n      f c + ∑ k ∈ ((Finset.univ : Finset (Fin K)).erase w).erase c, f k := by\n    rw [add_comm]; exact (Finset.sum_erase_add _ f hc_erased).symm\n  have step3 : ∑ k ∈ ((Finset.univ : Finset (Fin K)).erase w).erase c, f k =\n      ∑ k : Fin K, if k ≠ w ∧ k ≠ c then f k else 0 := by\n    have set_eq : ((Finset.univ : Finset (Fin K)).erase w).erase c =\n        (Finset.univ : Finset (Fin K)).filter (fun k => k ≠ w ∧ k ≠ c) := by\n      ext k; simp [Finset.mem_erase, Finset.mem_filter, Finset.mem_univ, and_comm]\n    rw [set_eq, Finset.sum_filter]\n  rw [step1, step2, step3]; ring\n\ntheorem k_token_factorization {K : ℕ} (hK : 2 ≤ K)\n    (logits : Fin K → ℝ) (c w : Fin K) (hcw : c ≠ w)\n    (T : ℝ) (hT : 0 < T) (hlcw : logits c < logits w) :\n    let Ea := logits w - logits c\n    let other := ∑ k : Fin K,\n      if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0\n    let A_T := 1 / (1 + exp (-(Ea / T)) + other)\n    let denom := ∑ k : Fin K, exp (logits k / T)\n    exp (logits c / T) / denom = A_T * exp (-(Ea / T)) := by\n  simp only\n  have hw_pos : 0 < exp (logits w / T) := exp_pos _\n  have hw_ne : exp (logits w / T) ≠ 0 := hw_pos.ne'\n  have hEa_pos : 0 < exp (-((logits w - logits c) / T)) := exp_pos _\n  have hother_nn : 0 ≤ ∑ k : Fin K,\n      if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0 := by\n    apply Finset.sum_nonneg; intros k _\n    split_ifs with h\n    · exact (exp_pos _).le\n    · exact le_refl 0\n  have denom_eq : ∑ k : Fin K, exp (logits k / T) =\n      exp (logits w / T) * ∑ k : Fin K, exp ((logits k - logits w) / T) := by\n    rw [Finset.mul_sum]; congr 1; ext k\n    rw [← Real.exp_add]; congr 1; ring\n  have num_eq : exp (logits c / T) =\n      exp (logits w / T) * exp (-((logits w - logits c) / T)) := by\n    rw [← Real.exp_add]; congr 1; ring\n  have split_eq : ∑ k : Fin K, exp ((logits k - logits w) / T) =\n      1 + exp (-((logits w - logits c) / T)) +\n      ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0 := by\n    rw [sum_split_two_elems (fun k => exp ((logits k - logits w) / T)) w c hcw.symm]\n    have hw_term : exp ((logits w - logits w) / T) = 1 := by simp\n    have hc_term : exp ((logits c - logits w) / T) = exp (-((logits w - logits c) / T)) := by\n      congr 1; ring\n    rw [hw_term, hc_term]\n  have hdenom_pos : 0 < 1 + exp (-((logits w - logits c) / T)) +\n      ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0 := by\n    linarith\n  rw [denom_eq, split_eq, num_eq]\n  have h_denom_ne : exp (logits w / T) *\n      (1 + exp (-((logits w - logits c) / T)) +\n       ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0) ≠ 0 :=\n    mul_ne_zero hw_ne hdenom_pos.ne'\n  field_simp [h_denom_ne]; ring\n\nlemma log_A_nonpositive {K : ℕ}\n    (logits : Fin K → ℝ) (c w : Fin K) (T : ℝ) (hT : 0 < T) :\n    let Ea := logits w - logits c\n    let other := ∑ k : Fin K,\n      if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0\n    let A_T := 1 / (1 + exp (-(Ea / T)) + other)\n    Real.log A_T ≤ 0 := by\n  simp only\n  have hexp : 0 < exp (-((logits w - logits c) / T)) := exp_pos _\n  have hother : 0 ≤ ∑ k : Fin K,\n      if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0 := by\n    apply Finset.sum_nonneg; intros k _\n    split_ifs with h\n    · exact (exp_pos _).le\n    · exact le_refl 0\n  have hdenom_pos : 0 < 1 + exp (-((logits w - logits c) / T)) +\n      ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0 := by\n    linarith\n  apply Real.log_nonpos\n  · exact div_nonneg zero_le_one (by linarith)\n  · rw [div_le_one hdenom_pos]; linarith\n\nend ArrheniusLLM",
+  "proof_explanation": "All five theorems and two key lemmas are proved without any sorry placeholders, verified by the Lean 4 + Mathlib compiler.\n\n**Key Lemma (log_one_add_le):** log(1+x) ≤ x for x ≥ 0. Proved by applying Real.log_le_sub_one_of_pos at (1+x) to get log(1+x) ≤ (1+x)-1 = x, then closing with linarith.\n\n**Theorem 1 (two_token_prob_eq):** The exact two-token softmax P = exp(lc/T)/(exp(lc/T)+exp(lw/T)) equals exp(-Δ/T)/(1+exp(-Δ/T)). Proved by cross-multiplying via div_eq_div_iff after establishing positivity of denominators, then using the key factorization exp(lc/T) = exp(lw/T)·exp(-Δ/T) from Real.exp_add, closing with ring.\n\n**Theorem 2 (two_token_log_prob):** log P = -Δ/T - log(1+exp(-Δ/T)). Proved by rewriting with Theorem 1, then applying Real.log_div and Real.log_exp.\n\n**Theorem 3 (arrhenius_approx_bound):** The approximation error err = log P - (-Δ/T) satisfies -exp(-Δ/T) ≤ err ≤ 0. Proved by rewriting with Theorem 2 (so err = -log(1+exp(-Δ/T))), then: lower bound uses the Key Lemma log(1+exp(-Δ/T)) ≤ exp(-Δ/T), upper bound uses Real.log_nonneg since 1+exp ≥ 1.\n\n**Helper Lemma (sum_split_two_elems):** Extracts two named elements w,c from a finite sum over Fin K: ∑ f k = f w + f c + ∑(if k≠w∧k≠c then f k else 0). Proved by three steps: (1) extract w using Finset.sum_erase_add, (2) extract c from the remainder using Finset.sum_erase_add again, (3) convert the erased sum to an indicator sum via Finset.sum_filter after showing set equality.\n\n**Theorem 4 (k_token_factorization):** For K tokens with correct token c and dominant wrong token w, P(c|T) = A(T)·exp(-Ea/T) exactly. Proved by: (a) factoring exp(lw/T) from the denominator using Finset.mul_sum + Real.exp_add, (b) using sum_split_two_elems to split the normalized sum into 1 + exp(-Ea/T) + other, (c) applying field_simp and ring after establishing all non-zero denominators.\n\n**Theorem 5 (log_A_nonpositive):** log(A(T)) ≤ 0 since A(T) = 1/D with D ≥ 1. Proved by Real.log_nonpos: showing 0 ≤ A(T) via div_nonneg and A(T) ≤ 1 via div_le_one, using positivity of D from exp_pos and Finset.sum_nonneg.\n\n**Proof approach:** Analysis/real-analysis domain using algebraic manipulation of exp and log. Critical tactics: ring (polynomial identities in exp terms after factoring), linarith (linear arithmetic for inequalities), field_simp (clearing denominators), Real.log_div + Real.log_exp (log composition rules). The key insight is that all softmax manipulations reduce to polynomial identities in exp-terms after factoring out a common exp(lw/T) factor.\n\n**Critical bug fixed:** The let-chain in arrhenius_approx_bound had a parse error — '-exp(...)' on the line after 'let err := ...' was parsed as continuing the let-expression (unary minus). Fixed by wrapping the conclusion in explicit parentheses.",
+  "lemmas": [
+    {
+      "name": "log_one_add_le",
+      "statement": "lemma log_one_add_le (x : ℝ) (hx : 0 ≤ x) : Real.log (1 + x) ≤ x",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "linarith"
+    },
+    {
+      "name": "two_token_prob_eq",
+      "statement": "theorem two_token_prob_eq (lc lw T : ℝ) (hT : 0 < T) : let Δ := lw - lc; exp (lc / T) / (exp (lc / T) + exp (lw / T)) = exp (-(Δ / T)) / (1 + exp (-(Δ / T)))",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "ring"
+    },
+    {
+      "name": "two_token_log_prob",
+      "statement": "theorem two_token_log_prob (lc lw T : ℝ) (hT : 0 < T) : let Δ := lw - lc; Real.log (exp (lc / T) / (exp (lc / T) + exp (lw / T))) = -(Δ / T) - Real.log (1 + exp (-(Δ / T)))",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "rw [Real.log_div, Real.log_exp]"
+    },
+    {
+      "name": "arrhenius_approx_bound",
+      "statement": "theorem arrhenius_approx_bound (lc lw T : ℝ) (hT : 0 < T) (hlcw : lc < lw) : let Δ := lw - lc; let p := exp (lc / T) / (exp (lc / T) + exp (lw / T)); let err := Real.log p - (-(Δ / T)); ((-exp (-(Δ / T)) ≤ err) ∧ (err ≤ 0))",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "linarith"
+    },
+    {
+      "name": "sum_split_two_elems",
+      "statement": "lemma sum_split_two_elems {K : ℕ} (f : Fin K → ℝ) (w c : Fin K) (hwc : w ≠ c) : ∑ k : Fin K, f k = f w + f c + ∑ k : Fin K, if k ≠ w ∧ k ≠ c then f k else 0",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "Finset.sum_erase_add, Finset.sum_filter"
+    },
+    {
+      "name": "k_token_factorization",
+      "statement": "theorem k_token_factorization {K : ℕ} (hK : 2 ≤ K) (logits : Fin K → ℝ) (c w : Fin K) (hcw : c ≠ w) (T : ℝ) (hT : 0 < T) (hlcw : logits c < logits w) : let Ea := logits w - logits c; let other := ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0; let A_T := 1 / (1 + exp (-(Ea / T)) + other); let denom := ∑ k : Fin K, exp (logits k / T); exp (logits c / T) / denom = A_T * exp (-(Ea / T))",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "field_simp, ring"
+    },
+    {
+      "name": "log_A_nonpositive",
+      "statement": "lemma log_A_nonpositive {K : ℕ} (logits : Fin K → ℝ) (c w : Fin K) (T : ℝ) (hT : 0 < T) : let Ea := logits w - logits c; let other := ∑ k : Fin K, if k ≠ w ∧ k ≠ c then exp ((logits k - logits w) / T) else 0; let A_T := 1 / (1 + exp (-(Ea / T)) + other); Real.log A_T ≤ 0",
+      "compiler_out": "{\"verified\": true, \"has_sorries\": false, \"errors\": []}",
+      "is_compiler_verified": true,
+      "tactic": "Real.log_nonpos"
+    }
+  ],
+  "approaches_tried": [
+    {
+      "approach": "Initial direct proof with Ne.symm hwc ▸ for sum_split_two_elems",
+      "reason_failed": "Invalid ▸ notation — Ne.symm produces a ≠ proof not an equality; caused parse error."
+    },
+    {
+      "approach": "simp only without explicit div_nonneg type annotation",
+      "reason_failed": "div_nonneg (le_refl 1) used Nat type for 1 instead of ℝ; fixed with zero_le_one."
+    },
+    {
+      "approach": "Let-chain in arrhenius_approx_bound with -exp on next line after let err :=",
+      "reason_failed": "Lean 4 parser treated the leading - on the next line as binary subtraction continuing the let expression, causing 'expected ; or line break' parse error. Fixed by wrapping conclusion in explicit parentheses."
+    },
+    {
+      "approach": "show P by tac syntax in term position",
+      "reason_failed": "Not valid Lean 4 term syntax; must use (by tac : P) form instead."
+    }
+  ]
+}

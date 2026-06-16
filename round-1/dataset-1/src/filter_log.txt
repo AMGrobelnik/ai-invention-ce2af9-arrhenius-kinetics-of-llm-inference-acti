@@ -1,0 +1,28 @@
+MMLU-Pro Filter Log
+========================================
+raw: 12032
+after_F1: 12032
+after_F2: 12032
+after_F3: 12032
+after_F4: 12032
+
+Subjects (14):
+  biology
+  business
+  chemistry
+  computer science
+  economics
+  engineering
+  health
+  history
+  law
+  math
+  other
+  philosophy
+  physics
+  psychology
+
+Split sizes:
+  pilot_set: 200
+  main_set: 500
+  catalysis_set: 50

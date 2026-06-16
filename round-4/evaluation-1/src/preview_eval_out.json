@@ -1,0 +1,259 @@
+{
+  "metadata": {
+    "evaluation_name": "arrhenius_statistical_rigor_eval",
+    "source_experiment": "art_Ux9ENkZVYpvn",
+    "model": "microsoft/phi-4",
+    "dataset": "TIGER-Lab/MMLU-Pro",
+    "n_oc_instances": 30,
+    "mcnemar": {
+      "mcnemar_Toperating_vs_fixed07": {
+        "pvalue": 1.0,
+        "contingency_table": [
+          24,
+          2,
+          2
+        ],
+        "description": "a=both_correct, b=Toperating_only, c=fixed07_only, d=both_wrong"
+      },
+      "mcnemar_Toperating_vs_fixed10": {
+        "pvalue": 0.5,
+        "contingency_table": [
+          26,
+          0,
+          2
+        ],
+        "description": "a=both_correct, b=Toperating_only, c=fixed10_only, d=both_wrong"
+      },
+      "reconstruction_note": "Per-instance BON outcomes reconstructed from predict_p_correct_by_T using BON threshold p>0.0424 (P_BON>0.5 with N=16). Reconstructed k: T_op_0.3=26, fixed_T07=26, fixed_T10=28 (reported: 27, 25, 28 r...",
+      "mandatory_caveat": "The 6.7 pp difference (0 instance(s) net advantage out of 30) is directionally consistent with the Arrhenius prediction but does not reach statistical significance (McNemar p=1.000, n=30); confirming ..."
+    },
+    "table2_cis": [
+      {
+        "strategy": "T_operating_delta_0.2",
+        "k": 26,
+        "n": 30,
+        "accuracy": 0.866667,
+        "cp_lo": 0.6928,
+        "cp_hi": 0.9624,
+        "wilson_lo": 0.7032,
+        "wilson_hi": 0.9469,
+        "cis_overlap_T_operating_0.3": true
+      },
+      {
+        "strategy": "T_operating_delta_0.3",
+        "k": 27,
+        "n": 30,
+        "accuracy": 0.9,
+        "cp_lo": 0.7347,
+        "cp_hi": 0.9789,
+        "wilson_lo": 0.7438,
+        "wilson_hi": 0.9654,
+        "cis_overlap_T_operating_0.3": true
+      },
+      {
+        "strategy": "T_operating_delta_0.4",
+        "k": 24,
+        "n": 30,
+        "accuracy": 0.8,
+        "cp_lo": 0.6143,
+        "cp_hi": 0.9229,
+        "wilson_lo": 0.6269,
+        "wilson_hi": 0.9049,
+        "cis_overlap_T_operating_0.3": true
+      }
+    ],
+    "bootstrap_R2": {
+      "median": 0.847721,
+      "ci_lo": 0.753806,
+      "ci_hi": 0.914165,
+      "n_resamples": 10000,
+      "threshold_085_in_ci": true,
+      "interpretation": "Median R²=0.848 (95% bootstrap CI: [0.754, 0.914]); the C1 threshold of 0.85 is 0.002 above the observed median, which falls within bootstrap estimation error — the binary met/not-met judgment is stat..."
+    },
+    "tpref_analysis": {
+      "n_tpref_10": 13,
+      "n_tpref_lt10": 17,
+      "frac_tpref_10": 0.4333,
+      "subgroup_lt10": {
+        "acc_T_operating": {
+          "k": 15,
+          "n": 17,
+          "accuracy": 0.8824,
+          "wilson_lo": 0.6566,
+          "wilson_hi": 0.9671
+        },
+        "acc_fixed10": {
+          "k": 15,
+          "n": 17,
+          "accuracy": 0.8824,
+          "wilson_lo": 0.6566,
+          "wilson_hi": 0.9671
+        },
+        "acc_fixed07": {
+          "k": 15,
+          "n": 17,
+          "accuracy": 0.8824,
+          "wilson_lo": 0.6566,
+          "wilson_hi": 0.9671
+        },
+        "spearman_Ea_Tpref_restricted": {
+          "rho": 0.7518,
+          "p": 0.0005,
+          "n": 17
+        }
+      },
+      "subgroup_10": {
+        "acc_T_operating": {
+          "k": 11,
+          "n": 13,
+          "accuracy": 0.8462,
+          "wilson_lo": 0.5777,
+          "wilson_hi": 0.9567
+        },
+        "acc_fixed10": {
+          "k": 13,
+          "n": 13,
+          "accuracy": 1.0,
+          "wilson_lo": 0.7719,
+          "wilson_hi": 1.0
+        },
+        "acc_fixed07": {
+          "k": 11,
+          "n": 13,
+          "accuracy": 0.8462,
+          "wilson_lo": 0.5777,
+          "wilson_hi": 0.9567
+        }
+      },
+      "full_spearman_Ea_Tpref": {
+        "rho": 0.6736,
+        "p": 4.5e-05
+      }
+    },
+    "power_analysis": {
+      "n": 30,
+      "observed_rho": 0.673584,
+      "min_detectable_rho_80pct_power": 0.4924,
+      "se_fisher_z": 0.19245,
+      "n_required_for_observed_rho_at_80pct": 14.75,
+      "z_alpha_half": 1.96,
+      "z_beta": 0.842,
+      "interpretation": "At n=30, the minimum detectable ρ with 80% power (two-sided α=0.05) is approximately ρ_min≈0.49; the observed ρ=0.674 substantially exceeds this, confirming adequate power. The C6 finding is not under..."
+    },
+    "t_turn_reconciliation": {
+      "K": 10,
+      "ln_K": 2.302585,
+      "mean_theory": 0.242186,
+      "median_theory": 0.152644,
+      "iqr_theory": [
+        0.0686,
+        0.3044
+      ],
+      "mean_emp": 1.216667,
+      "median_emp": 1.4,
+      "iqr_emp": [
+        1.325,
+        1.4
+      ],
+      "frac_theory_lt_emp": 0.9333,
+      "clarification": "T_TURN^theory = Ea/ln(K) (mean≈0.24, median≈0.15, IQR≈[0.07,0.30]) is the theoretical upper bound quantity in Theorem 6, proving window [T_thresh, T_TURN^theory] is non-empty when N>K; it is distinct ..."
+    },
+    "delta_approx_note": {
+      "accuracy_regression_ea": 0.9,
+      "accuracy_delta_approx": 0.866667,
+      "gap_pp": 3.33,
+      "api_calls_regression": 350,
+      "api_calls_delta_approx": 1,
+      "methodological_note": "The delta-approx strategy (T_operating from single logprob call, accuracy=86.7%) achieves 3.3 pp less than regression-Ea T_operating (accuracy=90.0%). These are compared via a methodology asymmetry: r..."
+    },
+    "verdict_updates": {
+      "C1_median_R2_verdict": "INDETERMINATE",
+      "C1_rationale": "Observed median R²=0.848, 95% bootstrap CI [0.754, 0.914]. Threshold 0.85 falls within CI → verdict is INDETERMINATE.",
+      "C7_verdict_downgrade": true,
+      "C7_rationale": "McNemar p=1.000 (n=30); difference not statistically significant. Directionally consistent but confirmation requires n≈200.",
+      "C6_power_confirmed": true,
+      "C6_rationale": "At n=30, the minimum detectable ρ with 80% power (two-sided α=0.05) is approximately ρ_min≈0.49; the observed ρ=0.674 substantially exceeds this, confirming adequate power. The C6 finding is not under..."
+    }
+  },
+  "metrics_agg": {
+    "mcnemar_pvalue_Toperating_vs_fixed07": 1.0,
+    "mcnemar_pvalue_Toperating_vs_fixed10": 0.5,
+    "bootstrap_R2_median": 0.847721,
+    "bootstrap_R2_ci_lo": 0.753806,
+    "bootstrap_R2_ci_hi": 0.914165,
+    "n_tpref_10": 13.0,
+    "n_tpref_lt10": 17.0,
+    "frac_tpref_10": 0.4333,
+    "subgroup_lt10_acc_T_operating": 0.8824,
+    "subgroup_lt10_spearman_Ea_Tpref_rho": 0.7518,
+    "power_min_detectable_rho": 0.4924,
+    "power_observed_rho": 0.673584,
+    "power_n_required": 14.75,
+    "t_turn_mean_theory": 0.242186,
+    "t_turn_mean_emp": 1.216667,
+    "t_turn_frac_theory_lt_emp": 0.9333,
+    "delta_approx_gap_pp": 3.33,
+    "n_strategies_ci_overlap_with_top": 5.0
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "What is the term for a sub-optimal but acceptable outcome of negotiations between parties?\n\nA. Accepting\nB. Settling\nC. Negotiating\nD. Mediating\nE. Bargaining\nF. Satisficing\nG. Conceding\nH. Collaborat...",
+          "output": "F",
+          "metadata_question_id": 630,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_arrhenius_Ea": "0.203433",
+          "predict_arrhenius_R2": "0.284757",
+          "predict_T_pref": "1.0",
+          "predict_T_TURN": "1.4",
+          "predict_T_thresh_N16_simplified": "0.0734",
+          "eval_bon_correct_T_operating_03": 1,
+          "eval_bon_correct_fixed07": 1,
+          "eval_bon_correct_fixed10": 1,
+          "eval_p_op03": 0.1,
+          "eval_p_t07": 0.1,
+          "eval_p_t10": 0.4
+        },
+        {
+          "input": "The primary objective of team-based selling is to\n\nA. equitably manage the sales bonus pool\nB. increase the competitiveness within the sales team\nC. create multiple points of contact between the custo...",
+          "output": "H",
+          "metadata_question_id": 197,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_arrhenius_Ea": "0.127499",
+          "predict_arrhenius_R2": "0.985372",
+          "predict_T_pref": "1.0",
+          "predict_T_TURN": "1.4",
+          "predict_T_thresh_N16_simplified": "0.046",
+          "eval_bon_correct_T_operating_03": 1,
+          "eval_bon_correct_fixed07": 1,
+          "eval_bon_correct_fixed10": 1,
+          "eval_p_op03": 0.4,
+          "eval_p_t07": 0.55,
+          "eval_p_t10": 0.6
+        },
+        {
+          "input": "During a riot, Mr. Winter's car was overturned causing $346.50 in damage.Mr. Winter had $50-deductible col-lision insurance, but no comprehensive coverage. How much will theinsurance company pay Mr. W...",
+          "output": "E",
+          "metadata_question_id": 92,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_arrhenius_Ea": "0.348015",
+          "predict_arrhenius_R2": "0.89983",
+          "predict_T_pref": "0.7",
+          "predict_T_TURN": "1.4",
+          "predict_T_thresh_N16_simplified": "0.1255",
+          "eval_bon_correct_T_operating_03": 1,
+          "eval_bon_correct_fixed07": 1,
+          "eval_bon_correct_fixed10": 1,
+          "eval_p_op03": 0.0628,
+          "eval_p_t07": 0.2,
+          "eval_p_t10": 0.2
+        }
+      ]
+    }
+  ]
+}

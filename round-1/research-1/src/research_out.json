@@ -1,0 +1,172 @@
+{
+  "title": "Logprob Access, MMLU-Pro Schema, and Paper Methodology for Arrhenius Inference Experiment",
+  "summary": "All three hard technical dependencies for the Arrhenius Kinetics of LLM Inference experiment are resolved. Logprob access: both qwen/qwen-2.5-7b-instruct ($0.04/$0.10 per 1M) and meta-llama/llama-3.1-8b-instruct ($0.02/$0.03 per 1M) are confirmed on OpenRouter with 131K context; OpenRouter documents logprobs (boolean) and top_logprobs (int 0-20) parameters; 23% of 710 OpenRouter endpoints return logprobs empirically including Qwen 2.5 and Llama 3.1 8B families; temperature T=0.05 is within the documented 0.0-2.0 range; total experiment cost ~$0.69 with Qwen, well under $10. MMLU-Pro schema: TIGER-Lab/MMLU-Pro has 70 validation + 12,000 test rows, 10 options A-J per question (baseline 10% random accuracy), columns question_id/question/options/answer/answer_index/cot_content/category/src; official prompt ends with 'Think step by step and then output the answer in the format of The answer is (X)'; for single-token logprob extraction use max_tokens=1, top_logprobs=20, and take max(logprob('X'), logprob(' X')) per letter to handle the space-prefix tokenization ambiguity. Renze & Guven (2024): T grid {0.0,...,1.0} step 0.1, 10 samples/combination, Kruskal-Wallis + Dunn-Bonferroni p<0.05, no aggregate effect — consistent with Arrhenius since the rising-limb signal in the overconfident-error subset is masked at aggregate level. TURN (Du et al. 2025): dataset-level temperature selection via log-entropy inflection on t_j=j*0.1 grid; j* = first j where Δ²l(j)>0; T_pred = j*×0.1 + beta (0 majority, 0.1 best-of-N); MCQA adaptation uses first-token A-J logprob entropy. Wu et al. (2025): 13-point grid {0.0,...,1.2}, 1024 samples/T, per-question T_pref = argmax_T Pass@1024, untempered softmax entropy; uses Qwen3 (not Qwen2.5); +7.3pp multi-T vs single-T=0.6.",
+  "answer": "**OpenRouter Model Access and Logprob Confirmation:** Both target models are available on OpenRouter. `qwen/qwen-2.5-7b-instruct` costs $0.04/$0.10 per 1M input/output tokens with a 131K context window [2]. `meta-llama/llama-3.1-8b-instruct` costs $0.02/$0.03 per 1M with 131K context [3]. The OpenRouter API exposes `logprobs` (boolean) and `top_logprobs` (integer 0–20) parameters, with `temperature` documented from 0.0 to 2.0 and `max_tokens` / `max_completion_tokens` as integers ≥ 1 [1]. Temperature T=0.05 is within the documented 0.0–2.0 range; no evidence was found of provider-level minimum temperature clamping above 0.05 [1]. An empirical study testing 710 OpenRouter endpoints found 23% (164 endpoints) return logprobs when requested, explicitly confirming support for Qwen 2.5 and Llama 3.1 8B families; Fireworks AI (returns 5 logprobs), Azure (5 logprobs), Lambda, Nebius, and others (up to 20 logprobs) are among confirmed logprob-supporting backends [9].\n\n**API Cost Breakdown:** Using 150 input tokens and 1 output token per call — Step 0 pilot (~5,400 calls): $0.033; Step 3 main sampling (150 instances × 7 temps × 50 samples = 52,500 calls): $0.320; Step 5 logprob Ea (150 calls): $0.001; Step 7 TURN comparison (~3,150 calls): $0.020; Step 9 catalysis (~52,500 calls): $0.320. Total ≈ $0.69 with Qwen-2.5-7B [2], ≈$0.35 with Llama-3.1-8B [3], both well under the $10 budget.\n\n**MMLU-Pro Dataset Schema:** `TIGER-Lab/MMLU-Pro` (NOT `cais/mmlu`) has validation=70 rows and test=12,000 rows [4]. The complete column schema is: `question_id` (int64), `question` (string), `options` (List[string], 10 items), `answer` (string, A–J), `answer_index` (int64, 0–9), `cot_content` (string), `category` (string), `src` (string) [4]. Questions have 10 options A–J (not 4), so baseline random accuracy is 10% not 25%. The official evaluation code constructs options as `choice_map[i] + '. ' + option_text` for `choice_map='ABCDEFGHIJ'` and instructs the model: *'Think step by step and then output the answer in the format of \"The answer is (X)\" at the end'* [5]. The answer extraction regex is `r\"answer is \\(?([A-J])\\)?\"` [5]. For single-token logprob extraction: call with `max_tokens=1`, `top_logprobs=20`; for each letter X ∈ {A,...,J} compute `score(X) = max(logprob('X'), logprob(' X'))` to handle the space-prefix tokenization ambiguity; `logit(correct) = score(answer)`; `logit(wrong) = max score among other valid option letters [4,5].\n\n**Renze & Guven 2024 Methodology:** The paper used temperature grid T ∈ {0.0, 0.1, ..., 1.0} at step 0.1 (11 points), extended to 1.6 for initial GPT-3.5 exploration [6]. Each combination received 10 samples per question [6]. Nine models were tested: Claude 3 Opus, Command R+, Gemini 1.0 Pro, Gemini 1.5 Pro Preview, GPT-3.5 Turbo, GPT-4, Llama 2 7B Chat, Llama 2 70B Chat, Mistral Large [6]. Ten benchmarks were used: ARC Challenge Test, AQUA-RAT, Hellaswag, LogiQA, LSAT-AR, LSAT-LR, LSAT-RC, MedMCQA, SAT-English, SAT-Math [6]. The statistical test was Kruskal-Wallis (chosen because accuracy data is bimodally distributed with centers at 0.0 and 1.0) with Dunn-Bonferroni post-hoc at p<0.05 [6]. The conclusion was no statistically significant effect of temperature on aggregate accuracy [6]. No per-instance analysis and no logprob analysis were performed [6]. This is consistent with the Arrhenius hypothesis: the aggregate masks the rising-limb signal in the overconfident-error subset by diluting it with easy instances (always correct) and impossible instances (always wrong) [6].\n\n**TURN Algorithm — Du et al. 2025:** The TURN algorithm operates at dataset level — it produces one optimal temperature per (model, dataset) pair, not per-instance [7]. Temperature grid: t_j = j × 0.1, j = 0..J where J = ⌊t_max/0.1⌋ ≈ 15 [7]. Token-level entropy is H(p) = −Σ_{v∈top-K} p(v) log p(v) with K=1000 for efficiency, averaged over token positions and N=8×dataset_size instances [7]. Log-entropy curve: ℓ(t_j) = log H(t_j) [7]. Inflection point j* = first j where second finite difference Δ²ℓ(j) = ℓ(j+1) − 2ℓ(j) + ℓ(j−1) > 0 [7]. Final temperature: T_pred = j*×0.1 + β_A where β=0 for majority voting and β=0.1 for best-of-N [7]. Evaluation uses 256 samples per question at each temperature; entropy sweep uses 1 sample per instance [7]. Datasets tested: MATH (200 problems) and MBPP (100 problems) — generation tasks only; no MCQA discussion [7]. For MCQA adaptation: compute H(t_j) from first-token logprob entropy over A–J letters using top_logprobs at each temperature point [7].\n\n**Wu et al. 2025 Methodology:** The temperature grid is 13 values {0.0, 0.1, ..., 1.2}, step 0.1 [8]. Sample counts: T=0.0 → 1 (greedy); T>0 → 1,024 per question [8]. Per-question preferred temperature T_pref(q) = argmax_{T∈grid} Pass@1024(q, T), with no single temperature dominating across questions [8]. The entropy formula uses the untempered softmax: H = −Σ_y p(y|x,y_{1:t−1}) log p(y|x,y_{1:t−1}) where p is computed from raw model logits regardless of sampling temperature [8]. For hard problems, entropy fails because the model is uncertain for both correct and incorrect traces — no calibration signal [8]. Models tested: Qwen3-0.6B, 1.7B, 4B, 8B (NOT Qwen2.5), plus Polaris-4B-Preview [8]. Benchmarks: AIME 2024, AIME 2025, MATH500, LiveCodeBench v6, Hi-ToM [8]. The +7.3pp result is the mean accuracy gain of multi-temperature TTS over single-temperature TTS at T=0.6, measured at Pass@1024, averaged across 4 model sizes and 5 benchmarks [8]. The multi-temperature voting algorithm uses τ_intra=0.8 and τ_cross=1.0 thresholds, enabling early exit on confident answers and reducing compute by 26–78% [8]. In the Arrhenius experiment, T_pref is approximated as argmax_T P_empirical(correct|T) on {0.05,0.1,0.2,0.3,0.5,0.7,1.0} with 50 samples — acknowledge the 50 vs 1024 sample approximation.\n\n**Tokenization Pitfall:** Chat-format instruction-tuned models commonly generate ' A' (space + letter) rather than 'A' as the first token [4,5]. Always check top_logprobs for both 'X' and ' X' for each answer letter X and take the maximum as the effective score. With top_logprobs=20, both variants should appear for top candidates. Ending the prompt with 'Answer:' (no trailing space) can encourage bare-letter output. As a strong alternative, use logit_bias to restrict outputs to valid answer token IDs [5].",
+  "openrouter_models": {
+    "primary": {
+      "id": "qwen/qwen-2.5-7b-instruct",
+      "input_cost_per_1M": 0.04,
+      "output_cost_per_1M": 0.10,
+      "logprobs_confirmed": "yes (Qwen 2.5 family confirmed by arXiv:2512.03816; specific provider routing may vary)",
+      "logprobs_provider": "Fireworks AI (5 logprobs), Nebius, Lambda, others (up to 20 logprobs)",
+      "temp_min": 0.0,
+      "context_window": 131072,
+      "notes": "Release date 2024-10-16, knowledge cutoff June 2024. logprobs parameter is boolean; top_logprobs int 0-20. T=0.05 is within documented range 0.0-2.0. No evidence of provider-level T_min > 0.05 clamping."
+    },
+    "fallback": {
+      "id": "meta-llama/llama-3.1-8b-instruct",
+      "input_cost_per_1M": 0.02,
+      "output_cost_per_1M": 0.03,
+      "logprobs_confirmed": "yes (Llama 3.1 8B Instruct directly tested in arXiv:2512.03816)",
+      "logprobs_provider": "Fireworks, Lambda, Nebius, DeepInfra and others",
+      "temp_min": 0.0,
+      "context_window": 131072,
+      "notes": "Release date 2024-07-23, knowledge cutoff Dec 2023. Lower cost makes it good budget option at ~$0.35 total."
+    }
+  },
+  "cost_estimate": {
+    "pilot_step0_qwen": 0.033,
+    "main_sampling_step3_qwen": 0.320,
+    "logprob_calls_step5_qwen": 0.001,
+    "turn_comparison_step7_qwen": 0.020,
+    "catalysis_step9_qwen": 0.320,
+    "total_estimate_qwen": 0.694,
+    "total_estimate_llama": 0.347,
+    "budget_remaining_qwen": 9.306,
+    "notes": "Input tokens estimated at 150/call (question + 10 options + instruction), output 1 token (single letter). Step 0: 5,400 calls. Step 3: 52,500 calls (150 instances x 7 temps x 50 samples). Step 5: 150 calls. Step 7: ~3,150 calls. Step 9: 52,500 calls."
+  },
+  "mmlu_pro_schema": {
+    "dataset_id": "TIGER-Lab/MMLU-Pro",
+    "splits": {"validation": 70, "test": 12000, "total": 12070},
+    "columns": ["question_id", "question", "options", "answer", "answer_index", "cot_content", "category", "src"],
+    "column_types": {
+      "question_id": "int64",
+      "question": "string",
+      "options": "List[string] (10 items, A-J)",
+      "answer": "string (one of A-J)",
+      "answer_index": "int64 (0-9)",
+      "cot_content": "string (chain-of-thought reasoning)",
+      "category": "string (14 categories)",
+      "src": "string (source dataset)"
+    },
+    "answer_format": "string letter A-J",
+    "num_options": 10,
+    "baseline_random_accuracy": 0.10,
+    "categories": ["Math", "Physics", "Chemistry", "Biology", "Engineering", "Computer Science", "Business", "Economics", "Law", "Health", "Psychology", "Philosophy", "History", "Other"],
+    "official_prompt_template": "The following are multiple choice questions (with answers) about {category}.\nThink step by step and then output the answer in the format of \"The answer is (X)\" at the end.\n\n{few_shot_examples}\n\nQuestion: {question}\nA. {options[0]}\nB. {options[1]}\n...\nAnswer: ",
+    "option_formatting": "choice_map = 'ABCDEFGHIJ'; options formatted as '{letter}. {text}\\n' for each option",
+    "answer_extraction_regex": "r\"answer is \\(?([A-J])\\)?\"",
+    "single_token_strategy": "Call API with max_tokens=1 and top_logprobs=20. For each letter X in {A,...,chr(64+len(options))}, compute score(X) = max(logprob('X'), logprob(' X')). logit(correct) = score(answer field). logit(wrong) = max score among other valid option letters.",
+    "token_ambiguity_handling": "Check both space-prefixed (' A') and bare ('A') token forms in top_logprobs. Take maximum as effective score. Prompt ending with 'Answer:' (no trailing space) encourages bare-letter output. Alternatively use logit_bias to restrict output to valid answer token IDs.",
+    "variable_options_handling": "Only consider letters A through chr(64+len(options)) as valid candidates. Some questions have fewer than 10 options.",
+    "cais_mmlu_note": "cais/mmlu is the original MMLU with 4 options A-D. TIGER-Lab/MMLU-Pro is the 10-option harder version. Use TIGER-Lab/MMLU-Pro."
+  },
+  "renze_guven_2024": {
+    "arxiv": "2402.05201",
+    "title": "The Effect of Sampling Temperature on Problem Solving in Large Language Models",
+    "temperature_grid": "0.0 to 1.0, step 0.1 (11 points); extended to 1.6 for initial GPT-3.5 exploration",
+    "samples_per_combination": 10,
+    "models": ["Claude 3 Opus", "Command R+", "Gemini 1.0 Pro", "Gemini 1.5 Pro Preview", "GPT-3.5 Turbo", "GPT-4", "Llama 2 7B Chat", "Llama 2 70B Chat", "Mistral Large"],
+    "benchmarks": ["ARC Challenge Test", "AQUA-RAT", "Hellaswag", "LogiQA", "LSAT-AR", "LSAT-LR", "LSAT-RC", "MedMCQA", "SAT-English", "SAT-Math"],
+    "statistical_test": "Kruskal-Wallis (non-parametric; data bimodally distributed with centers at 0.0 and 1.0)",
+    "post_hoc_test": "Dunn-Bonferroni for pairwise comparisons",
+    "p_value_threshold": "p < 0.05",
+    "prompt_formats": ["Baseline", "Domain Expertise", "Self-recitation", "Chain-of-Thought", "Composite"],
+    "conclusion": "No statistically significant effect of temperature on aggregate accuracy from T=0 to T=1.0",
+    "per_instance_analysis": false,
+    "logprob_analysis": false,
+    "github": "https://github.com/matthewrenze/jhu-llm-temperature",
+    "consistency_with_arrhenius": "The aggregate null result is fully consistent with Arrhenius. The mixture of easy instances (always correct), impossible instances (always wrong), and overconfident-error instances (rising-limb, logit(wrong)>logit(correct) at T=0) dilutes the rising-limb signal at aggregate level. Arrhenius experiment isolates the overconfident-error subset by conditioning on greedy-incorrect instances."
+  },
+  "turn_algorithm": {
+    "paper": "Du et al. 2025, arXiv:2502.05234",
+    "title": "Optimizing Temperature for Language Models with Multi-Sample Inference",
+    "temperature_grid": "t_j = j * 0.1, j=0..J; J = floor(t_max/0.1) approx 15; t_max approx 1.5 in experiments",
+    "entropy_formula": "H(p) = -sum_{v in top-K} p(v) log p(v), K=1000; averaged over token positions and N instances at each temperature",
+    "log_entropy_curve": "l(t_j) = log H(t_j)",
+    "inflection_detection": "j* = first j in [1,J-1] where delta2_l(j) = l(j+1) - 2*l(j) + l(j-1) > 0 (first concave-to-convex transition)",
+    "adaptation_factor": {"majority_voting": 0.0, "best_of_N": 0.1},
+    "final_temperature": "T_pred = j* * 0.1 + beta_A",
+    "granularity": "Dataset-level: one T per (model, dataset). NOT per-instance.",
+    "n_samples_entropy_sweep": "N = 8 * dataset_size instances; 1 sample per instance per temperature",
+    "n_samples_evaluation": "256 samples per question at each temperature",
+    "datasets_tested": ["MATH (200 problems)", "MBPP (100 problems)"],
+    "mcqa_adaptation": "For MCQA with max_tokens=1: H(t_j) = mean over N instances of [-sum_{X in {A,...,J}} p(X|question; t_j) * log p(X|question; t_j)] from top_logprobs. Apply same inflection detection.",
+    "pseudocode": ["Input: model M, dataset T={X_1,...,X_k}, t=0.1, t_max=1.5, N=8k, aggregation A", "J = floor(t_max/t); E[0..J] = []", "For n=1 to N: sample X_i; for j=0 to J: generate Y at tau=j*t; compute H_token; append to E[j]", "For j=0 to J: H(j)=mean(E[j]); l(j)=log(H(j))", "j* = first j in [1,J-1] where l(j+1)-2*l(j)+l(j-1) > 0", "T_pred = j**0.1 + beta_A; return T_pred"]
+  },
+  "wu_et_al_2025": {
+    "paper": "Wu et al. 2025, arXiv:2510.02611",
+    "temperature_grid": "T in {0.0, 0.1, 0.2, ..., 1.2} — 13 values, step 0.1",
+    "samples_per_temperature": {"T_zero": 1, "T_nonzero": 1024},
+    "preferred_temp_definition": "T_pref(q) = argmax_{T in grid} Pass@1024(q, T) — per-question, no single T dominates",
+    "entropy_formula": "H = -sum_y p(y|x,y_{1:t-1}) * log p(y|x,y_{1:t-1}), p from UNTEMPERED softmax f_theta(x,y_{1:t-1})",
+    "entropy_failure_for_hard": "Model is uncertain (high entropy) for both correct and incorrect traces on hard problems — no calibration signal to distinguish quality",
+    "models_tested": ["Qwen3-0.6B", "Qwen3-1.7B", "Qwen3-4B", "Qwen3-8B", "Polaris-4B-Preview"],
+    "benchmarks": ["AIME 2024", "AIME 2025", "MATH500", "LiveCodeBench v6", "Hi-ToM"],
+    "7_3_pp_meaning": "Mean accuracy gain of multi-T TTS over single-T=0.6 TTS at Pass@1024, averaged across 4 Qwen3 sizes and 5 benchmarks",
+    "multi_temp_voting": {"tau_intra": 0.8, "tau_cross": 1.0, "compute_reduction": "26-78% depending on model strength"},
+    "arrhenius_operationalization": "T_pref per question = argmax_T P_empirical(correct|T) on {0.05,0.1,0.2,0.3,0.5,0.7,1.0} with 50 samples. Approximates Wu et al. at 50 vs 1024 samples — acknowledge binomial variance.",
+    "model_family_note": "Wu et al. use Qwen3 (not Qwen2.5). Note model family difference when comparing to Arrhenius experiment results."
+  },
+  "sources": [
+    {
+      "index": 1,
+      "url": "https://openrouter.ai/docs/api/reference/parameters",
+      "title": "OpenRouter API Parameters Documentation",
+      "summary": "Confirmed logprobs (boolean), top_logprobs (int 0-20), temperature (0.0-2.0), max_tokens parameter types and ranges."
+    },
+    {
+      "index": 2,
+      "url": "https://openrouter.ai/qwen/qwen-2.5-7b-instruct",
+      "title": "Qwen2.5-7B-Instruct on OpenRouter",
+      "summary": "Confirmed model ID, pricing $0.04/$0.10 per 1M input/output, 131K context window, release date Oct 2024."
+    },
+    {
+      "index": 3,
+      "url": "https://openrouter.ai/meta-llama/llama-3.1-8b-instruct",
+      "title": "Llama-3.1-8B-Instruct on OpenRouter",
+      "summary": "Confirmed model ID, pricing $0.02/$0.03 per 1M input/output, 131K context window, release date Jul 2024."
+    },
+    {
+      "index": 4,
+      "url": "https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro",
+      "title": "TIGER-Lab/MMLU-Pro on HuggingFace",
+      "summary": "Confirmed full column schema with types, split sizes (70 validation, 12000 test), 10 options per question A-J, 14 categories, baseline 10% random accuracy."
+    },
+    {
+      "index": 5,
+      "url": "https://github.com/TIGER-AI-Lab/MMLU-Pro/blob/main/evaluate_from_api.py",
+      "title": "MMLU-Pro Official Evaluation Code (GitHub)",
+      "summary": "Extracted exact prompt template, option formatting code (choice_map=ABCDEFGHIJ), instruction text 'Think step by step and then output The answer is (X)', and answer extraction regex r'answer is \\(?([A-J])\\)?'."
+    },
+    {
+      "index": 6,
+      "url": "https://arxiv.org/html/2402.05201v3",
+      "title": "Renze & Guven 2024 — Effect of Sampling Temperature on Problem Solving in LLMs",
+      "summary": "Temperature grid 0.0-1.0 step 0.1, 10 samples/combination, 9 models, 10 benchmarks, 5 prompt formats, Kruskal-Wallis p<0.05, no aggregate effect, no per-instance or logprob analysis."
+    },
+    {
+      "index": 7,
+      "url": "https://arxiv.org/html/2502.05234v2",
+      "title": "Du et al. TURN 2025 — Optimizing Temperature for LMs with Multi-Sample Inference",
+      "summary": "Full TURN algorithm: t_j=j*0.1 grid, K=1000 entropy approximation, log-entropy inflection detection, beta adaptation factors, dataset-level granularity, N=8*dataset_size, 256 eval samples/question, MATH+MBPP datasets."
+    },
+    {
+      "index": 8,
+      "url": "https://arxiv.org/html/2510.02611v1",
+      "title": "Wu et al. 2025 — Temperature Scaling in Test-Time Scaling for LLMs",
+      "summary": "13-point grid 0.0-1.2, 1024 samples/T, per-question T_pref definition, untempered softmax entropy, entropy failure for hard questions, Qwen3 0.6B-8B, +7.3pp result, tau_intra=0.8 tau_cross=1.0."
+    },
+    {
+      "index": 9,
+      "url": "https://arxiv.org/html/2512.03816v1",
+      "title": "Log Probability Tracking of LLM APIs (arXiv:2512.03816)",
+      "summary": "Empirical study: 23% of 710 OpenRouter endpoints support logprobs; Qwen 2.5 and Llama 3.1 8B families confirmed; Fireworks, Lambda, Azure, Nebius among supporting backends."
+    }
+  ],
+  "follow_up_questions": [
+    "Does any specific OpenRouter provider (Nebius, DeepInfra, Fireworks) guarantee logprob support for Qwen-2.5-7B-Instruct with provider routing pinning via 'provider.order', and what is the maximum number of logprobs returned (5 vs 20)?",
+    "Is Qwen3-8B available on OpenRouter with logprob support as an alternative to Qwen2.5-7B for better direct comparability with Wu et al.'s Qwen3 models, and does its pricing fit within the $10 budget?",
+    "Does the TURN algorithm's entropy inflection operate correctly when entropy is computed only over the 10-token MCQA answer set (A-J) rather than top-K=1000 tokens — is there risk of degenerate log-entropy curves?"
+  ]
+}

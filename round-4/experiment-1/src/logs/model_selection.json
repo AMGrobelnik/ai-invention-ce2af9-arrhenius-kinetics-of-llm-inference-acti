@@ -1,0 +1,14 @@
+{
+  "selected_model": "mistralai/ministral-8b-2512",
+  "log": {
+    "mistralai/ministral-8b-2512": {
+      "n_responses": 20,
+      "logprob_ok": 20,
+      "logprob_ok_rate": 1.0,
+      "oc_count": 14,
+      "oc_rate": 0.7,
+      "passes": true
+    }
+  },
+  "used_arc_fallback": false
+}

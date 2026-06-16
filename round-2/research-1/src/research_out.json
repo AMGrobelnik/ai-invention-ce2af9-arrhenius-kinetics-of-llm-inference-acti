@@ -1,0 +1,102 @@
+{
+  "title": "Softmax-Boltzmann Prior Art Survey, T_thresh Novelty Verdict, and Applied MCQA Citations",
+  "summary": "Six canonical references establish the softmax=Boltzmann identity: Bridle (1990) introduced the normalised exponential in ML; Hinton et al. (2015) gave the exact temperature-scaled formula q_i=exp(z_i/T)/Z; Goodfellow et al. (2016) and Murphy (2012) cover it in textbooks; Boltzmann (1868) and Gibbs (1902) are the physics primaries; Luce (1959) derived it from choice theory. T_thresh prior-art verdict is CLEAR: no prior work derives T_thresh=Ea/ln(N) as a per-instance correct-answer recovery threshold. The closest related work is SMART (arXiv:2506.23492) which derives a calibration bound using logit gap to achieve a target confidence p-hat — a fundamentally different purpose. Renze and Guven (2402.05201) confirmed zero Boltzmann/Arrhenius mentions. Five MCQA citations collected covering medical (MedQA, JMIR token-probability study), legal (LEXam), and standardized-test (MMLU, MMLU-Pro) benchmarks. Revised novelty paragraph and applied-scope paragraph drafted for paper integration.",
+  "answer": "## Phase 1: Canonical Softmax-Boltzmann References\n\nBridle (1990) [1] introduced the 'normalised exponential' (softmax) for probabilistic neural network output in the NATO ASI Neurocomputing volume. He does NOT introduce temperature as a free variable — just the basic unnormalized softmax. Goodfellow et al. (2016) [3] cite Bridle (1990) directly in their softmax output units section (Section 6.2.2.3): 'squared error is a poor loss function for softmax units, and can fail to train the model to change its output, even when the model makes highly confident incorrect predictions (Bridle 1990).'\n\nHinton, Vinyals and Dean (2015) [2] provide the canonical temperature-scaled softmax formula (extracted directly from arXiv:1503.02531 PDF): 'q_i = exp(z_i/T) / sum_j exp(z_j/T), where T is a temperature that is normally set to 1. Using a higher value for T produces a softer probability distribution over classes.' They coin the term 'soft targets' and note that 'to raise the temperature of the final softmax until the cumbersome model produces a suitably soft set of targets.' Gradient magnitudes scale as 1/T^2, noted explicitly. The formula is mathematically identical to the Boltzmann distribution with logits replacing negative energies, though they do not invoke the physics analogy explicitly.\n\nGoodfellow, Bengio and Courville (2016) [3] cover softmax in Section 6.2.2.3 ('Softmax Units for Multinoulli Output Distributions') and Boltzmann machines in Chapter 20. The energy-based model framing P(x) proportional to exp(-E(x)/T) defines the Boltzmann machine's canonical probability form.\n\nMurphy (2012) [4] treats softmax as the multinomial logistic (log-linear) model in Chapter 8 and Boltzmann/Gibbs distributions in Chapter 19 (undirected graphical models / Markov Random Fields).\n\nWikipedia's softmax article (subsection 'Statistical mechanics') [5] states: 'In statistical mechanics, the softargmax function is known as the Boltzmann distribution (or Gibbs distribution)', citing Boltzmann (1868) and Gibbs (1902) as primary sources. These physics primaries confirm the identity predates ML by over a century.\n\nLuce (1959) [6] derived the softmax form independently in 'Individual Choice Behavior: A Theoretical Analysis' (Wiley) from the axiom of independence of irrelevant alternatives. The matching law selection rule that follows from Luce's choice axiom is mathematically equivalent to the softmax function [6]. This provides the behavioral/decision-theoretic grounding predating the ML usage by 30 years.\n\n## Phase 2: T_thresh Prior-Art Verdict — CLEAR\n\nNo prior work derives T_thresh = Ea/ln(N) or any equivalent per-instance threshold for correct-answer recovery in overconfident-error subsets [2, 7, 8, 9, 10]. Five independent searches for 'threshold temperature logit language model per-instance formula', 'T_thresh LLM logit gap per-question', 'Best-of-N temperature lower bound logit gap per-instance', and related queries returned no relevant prior work.\n\nThe closest related work is SMART (arXiv:2506.23492) [8], which proves Proposition 3.2 (g-Boundedness): 'T is bounded by -g/log((1-p-hat)/p-hat) < T <= -g/log((1-p-hat)/(p-hat*(n-1)))', where g = z_max - z_2nd is the logit gap (top minus second-largest logit) and p-hat is a desired TARGET confidence value. This is fundamentally different from T_thresh = Ea/ln(N): SMART asks 'what T achieves target calibration confidence p-hat?' while T_thresh asks 'at what minimum T does the currently-suppressed correct token become the argmax in an overconfident-error instance?' Additionally, SMART's logit gap is max-vs-second regardless of correctness, whereas in T_thresh the Ea is the gap between the correct token and the top wrong token. SMART should be cited as related work with explicit contrast, not treated as prior art [8].\n\nTURN (arXiv:2502.05234) [9] uses a task-level entropy inflection point method with no per-instance logit-gap formula — a global temperature per model-task pair, not per-instance [9].\n\nRenze and Guven (arXiv:2402.05201) [7] confirmed zero mentions of Boltzmann, Arrhenius, activation energy, statistical mechanics, logit gap, or Gibbs via PDF fetch_grep. They use T grid 0.0-1.0 step 0.1 with Kruskal-Wallis + Dunn-Bonferroni, finding no significant aggregate effect [7].\n\n## Phase 3: Applied MCQA Citations\n\nMedQA (Jin et al. 2020, arXiv:2009.13081) [11] provides 12,723 English questions from USMLE medical licensing exams in free-form multiple-choice format — the canonical medical MCQA benchmark [11].\n\nA JMIR token-probability study (2025) [12] evaluated 9 LLMs on 2,522 medical licensing exam MCQA questions, finding token probabilities consistently outperform expressed verbal confidence for predicting accuracy (AUROC 0.71-0.87 across all models, all P<.001) [12]. The study uses T=0 for primary analysis and T=0.5 for sensitivity, directly motivating per-instance temperature calibration. Models express uniformly high verbal confidence (~90-100%) while token probabilities reveal genuine uncertainty [12].\n\nMMPU-Pro (Wang et al. 2024, arXiv:2406.01574, NeurIPS 2024 Spotlight) [13] provides 12,000+ questions with 10 options (A-J) across 14 domains including Health and Law — the canonical 10-option single-token MCQA benchmark, reducing chance baseline from 25% to 10% [13].\n\nMMPU (Hendrycks et al. 2020, arXiv:2009.03300) [14] spans 57 tasks including US law and professional ethics, establishing single-letter answer MCQA as standard format with near-random LLM performance on legally important subjects [14].\n\nLEXam (2025, arXiv:2505.12864) [15] provides 7,537 questions across 340 law school exams in English and German with mixed MCQA and open-ended formats [15].\n\n## Phase 4: Revised Novelty and Applied-Scope Paragraphs\n\nRevised novelty paragraph for paper: The mathematical equivalence between the softmax function and the Boltzmann distribution is a well-established identity: Bridle (1990) [1] introduced the normalised exponential as a probabilistic NN output; Hinton et al. (2015) [2] explicitly parametrized it with temperature T; and foundational textbooks (Goodfellow et al. 2016 [3]; Murphy 2012 [4]) situate the softmax within energy-based and log-linear models where P proportional to exp(-E/kT) is canonical. The present paper does not claim to derive this identity; its contribution is fourfold: (a) applying the Boltzmann-softmax analogy to the overconfident-error subset of MCQA — the regime masked in aggregate analyses such as Renze and Guven (2024) [7]; (b) deriving the per-instance threshold formula T_thresh = Ea/ln(N) where Ea is the logit gap between the correct token and the top competing token and N is the number of answer choices; (c) framing the operative window [T_thresh, T_TURN] as the interval for simultaneous correct-token recovery and consistency preservation; and (d) proposing a falsifiable catalysis prediction distinguishing Arrhenius kinetics from mere entropy maximization.\n\nApplied-scope paragraph: Single-token MCQA answer extraction is the dominant evaluation protocol in medical, legal, and standardized-test benchmarks. In medical QA, MedQA [11] provides 12,723 USMLE questions, and token probabilities outperform verbal confidence (AUROC 0.71-0.87) for predicting MCQA accuracy across 9 LLMs [12], directly motivating per-instance temperature calibration. In legal reasoning, LEXam [15] covers 7,537 law exam questions. For standardized testing, MMLU [14] spans 57 tasks and MMLU-Pro [13] (NeurIPS 2024) extends to 10-option questions over 14 domains including Health and Law. These domains share the property that answer confidence has direct downstream consequences — triage, legal advice, admissions — motivating rigorous per-instance temperature calibration.",
+  "sources": [
+    {
+      "index": 1,
+      "url": "https://www.semanticscholar.org/paper/Probabilistic-Interpretation-of-Feedforward-Network-Bridle/1f462943c8d0af69c12a09058251848324135e5a",
+      "title": "Bridle (1990) — Probabilistic Interpretation of Feedforward Network Outputs",
+      "summary": "Canonical ML introduction of the normalised exponential (softmax). NATO ASI Neurocomputing vol. 68. Does not introduce temperature. Cited directly by Goodfellow et al. (2016) Section 6.2.2.3."
+    },
+    {
+      "index": 2,
+      "url": "https://arxiv.org/pdf/1503.02531",
+      "title": "Hinton, Vinyals & Dean (2015) — Distilling the Knowledge in a Neural Network (arXiv:1503.02531)",
+      "summary": "Exact formula extracted from PDF: q_i = exp(z_i/T)/sum_j exp(z_j/T), T normally set to 1. Coins 'soft targets'. Canonical ML reference for temperature-scaled softmax."
+    },
+    {
+      "index": 3,
+      "url": "https://mcube.lab.nycu.edu.tw/~cfung/docs/books/goodfellow2016deep_learning.pdf",
+      "title": "Goodfellow, Bengio & Courville (2016) — Deep Learning (MIT Press)",
+      "summary": "Section 6.2.2.3 introduces softmax for multinoulli outputs, citing Bridle (1990). Chapter 20 covers Boltzmann machines as energy-based models with P(x) proportional to exp(-E(x)/T)."
+    },
+    {
+      "index": 4,
+      "url": "https://research.google.com/pubs/archive/38136.pdf",
+      "title": "Murphy (2012) — Machine Learning: A Probabilistic Perspective (MIT Press)",
+      "summary": "Chapter 8: softmax as multinomial log-linear model. Chapter 19: Boltzmann/Gibbs distributions in undirected graphical models. Table of contents confirmed."
+    },
+    {
+      "index": 5,
+      "url": "https://en.wikipedia.org/wiki/Softmax_function",
+      "title": "Wikipedia: Softmax function — Statistical mechanics subsection",
+      "summary": "Exact quote: 'In statistical mechanics, the softargmax function is known as the Boltzmann distribution (or Gibbs distribution)'. Cites Boltzmann (1868) and Gibbs (1902) as primary physics sources."
+    },
+    {
+      "index": 6,
+      "url": "https://en.wikipedia.org/wiki/Luce%27s_choice_axiom",
+      "title": "Luce (1959) — Individual Choice Behavior via Luce's Choice Axiom (Wikipedia)",
+      "summary": "Choice-theoretic derivation of softmax from IIA axiom (1959), 30 years before ML usage. 'The matching law selection rule is sometimes called the softmax function, or the Boltzmann distribution.'"
+    },
+    {
+      "index": 7,
+      "url": "https://arxiv.org/pdf/2402.05201",
+      "title": "Renze & Guven (2024) — The Effect of Sampling Temperature on Problem Solving in LLMs (arXiv:2402.05201)",
+      "summary": "Confirmed ABSENT via PDF grep: zero mentions of Boltzmann, Arrhenius, activation energy, statistical mechanics, logit gap, Gibbs. T grid 0.0-1.0 step 0.1; no significant aggregate temperature effect."
+    },
+    {
+      "index": 8,
+      "url": "https://arxiv.org/pdf/2506.23492",
+      "title": "SMART: Sample Margin-Aware Recalibration of Temperature (arXiv:2506.23492, 2026)",
+      "summary": "Proposition 3.2: T bounded by -g/log((1-p-hat)/p-hat). Calibration purpose (achieving target confidence p-hat), NOT recovery threshold. Different logit gap definition and purpose from T_thresh=Ea/ln(N)."
+    },
+    {
+      "index": 9,
+      "url": "https://arxiv.org/html/2502.05234v2",
+      "title": "TURN — Optimizing Temperature for LLMs with Multi-Sample Inference (arXiv:2502.05234)",
+      "summary": "Task-level entropy inflection point method. No per-instance logit-gap formula. Single global temperature per model-task pair. Not a novelty conflict with T_thresh."
+    },
+    {
+      "index": 10,
+      "url": "https://arxiv.org/abs/2405.17088",
+      "title": "Phase Transitions in the Output Distribution of Large Language Models (arXiv:2405.17088)",
+      "summary": "Studies distributional changes as function of temperature. No per-instance threshold formula derived. Not a novelty conflict."
+    },
+    {
+      "index": 11,
+      "url": "https://arxiv.org/abs/2009.13081",
+      "title": "Jin et al. (2020) — MedQA: What Disease does this Patient Have? (arXiv:2009.13081)",
+      "summary": "12,723 English USMLE questions, free-form multiple-choice format. Canonical medical MCQA benchmark. Submitted to AAAI 2021."
+    },
+    {
+      "index": 12,
+      "url": "https://www.jmir.org/2025/1/e64348",
+      "title": "JMIR (2025) — Token Probabilities to Mitigate LLM Overconfidence in Medical Questions",
+      "summary": "2,522 medical licensing MCQA questions; token probabilities AUROC 0.71-0.87 outperform verbal confidence across 9 LLMs. Uses T=0 primary, T=0.5 sensitivity. Directly motivates per-instance calibration."
+    },
+    {
+      "index": 13,
+      "url": "https://arxiv.org/abs/2406.01574",
+      "title": "Wang et al. (2024) — MMLU-Pro (NeurIPS 2024 Spotlight, arXiv:2406.01574)",
+      "summary": "12,000+ questions, 10 options (A-J), 14 domains including Health and Law. Canonical 10-option single-token MCQA benchmark. Reduces chance baseline from 25% to 10%."
+    },
+    {
+      "index": 14,
+      "url": "https://arxiv.org/abs/2009.03300",
+      "title": "Hendrycks et al. (2020) — Measuring Massive Multitask Language Understanding (MMLU, arXiv:2009.03300)",
+      "summary": "57 tasks including US law and professional ethics. Establishes single-letter answer MCQA as standard. Near-random LLM performance on legally/socially important subjects."
+    },
+    {
+      "index": 15,
+      "url": "https://arxiv.org/abs/2505.12864",
+      "title": "LEXam (2025) — Benchmarking Legal Reasoning on 340 Law Exams (arXiv:2505.12864)",
+      "summary": "7,537 questions across 340 law school exams in English and German. Mixed MCQA and open-ended format. LLM-as-Judge evaluation with human expert validation."
+    }
+  ],
+  "follow_up_questions": [
+    "Does Luce (1959) choice axiom derivation supersede Bridle (1990) as the canonical softmax antecedent, and should both be cited to establish the identity's pre-ML history in the Related Work section?",
+    "Does the SMART paper (arXiv:2506.23492) Proposition 3.2 g-Boundedness warrant explicit comparison in the paper's related work section, distinguishing calibration-to-target-confidence from per-instance recovery threshold T_thresh=Ea/ln(N)?",
+    "Are there any papers post-mid-2026 applying Boltzmann/Arrhenius analogy to LLM inference, given this is a rapidly active area that may have progressed since the search date?"
+  ]
+}

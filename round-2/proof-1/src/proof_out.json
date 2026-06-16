@@ -1,0 +1,43 @@
+{
+  "proof_successful": true,
+  "verified": true,
+  "lean_code": "import Mathlib\n\n-- ============================================================\n-- Theorem A: Window Non-Emptiness\n-- The operating window [T_thresh, T_TURN] is non-empty when N > K\n-- T_thresh = Ea/ln(N), T_TURN = Ea/ln(K)\n-- ============================================================\n\ntheorem thresh_window_nonempty (Ea N K : ℝ)\n    (hEa : 0 < Ea)\n    (hK  : 1 < K)\n    (hN  : K < N)\n    : Ea / Real.log N < Ea / Real.log K := by\n  have hlogK : 0 < Real.log K := Real.log_pos hK\n  have hN1 : 1 < N := by linarith\n  have hlogN : 0 < Real.log N := Real.log_pos hN1\n  have hloglt : Real.log K < Real.log N :=\n    Real.log_lt_log (by linarith) hN\n  rw [div_lt_div_iff₀ hlogN hlogK]\n  exact mul_lt_mul_of_pos_left hloglt hEa\n\n-- Corollary: concrete numeric example for MCQA (K=4, N=16, Ea=2)\nexample : (2 : ℝ) / Real.log 16 < (2 : ℝ) / Real.log 4 :=\n  thresh_window_nonempty 2 16 4 (by norm_num) (by norm_num) (by norm_num)\n\n-- ============================================================\n-- Helper Lemma: Arrhenius error identity\n-- log(1 + exp(Δ/T)) - Δ/T = log(1 + exp(-Δ/T))\n-- ============================================================\n\nlemma arrhenius_error_eq (Δ T : ℝ) (hΔ : 0 < Δ) (hT : 0 < T) :\n    Real.log (1 + Real.exp (Δ / T)) - Δ / T =\n    Real.log (1 + Real.exp (-Δ / T)) := by\n  have hexpD : 0 < Real.exp (Δ / T) := Real.exp_pos _\n  have h1expD : 0 < 1 + Real.exp (Δ / T) := by linarith\n  have h1 : Real.log (1 + Real.exp (Δ / T)) - Δ / T =\n            Real.log (1 + Real.exp (Δ / T)) - Real.log (Real.exp (Δ / T)) := by\n    rw [Real.log_exp]\n  rw [h1, ← Real.log_div h1expD.ne' hexpD.ne']\n  congr 1\n  rw [show -Δ / T = -(Δ / T) by ring, Real.exp_neg]\n  field_simp\n  ring\n\n-- ============================================================\n-- Theorem B: Arrhenius Grid Approximation Bound\n-- error(T) = log(1 + exp(-Δ/T)) ≤ exp(-Δ/T)\n-- ============================================================\n\ntheorem arrhenius_error_bound (Δ T : ℝ) (hΔ : 0 < Δ) (hT : 0 < T) :\n    Real.log (1 + Real.exp (-Δ / T)) ≤ Real.exp (-Δ / T) := by\n  have hexp_pos : 0 < Real.exp (-Δ / T) := Real.exp_pos _\n  have h1z_pos : 0 < 1 + Real.exp (-Δ / T) := by linarith\n  calc Real.log (1 + Real.exp (-Δ / T))\n      ≤ (1 + Real.exp (-Δ / T)) - 1 := Real.log_le_sub_one_of_pos h1z_pos\n    _ = Real.exp (-Δ / T)           := by ring\n\nprivate lemma grid_step (Δ T : ℝ) (hΔ : 0 < Δ) (hTpos : 0 < T) (hTle1 : T ≤ 1) :\n    Real.log (1 + Real.exp (-Δ / T)) ≤ Real.exp (-Δ) := by\n  apply le_trans (arrhenius_error_bound Δ T hΔ hTpos)\n  apply Real.exp_le_exp.mpr\n  have hDivGe : Δ ≤ Δ / T := by\n    rw [le_div_iff₀ hTpos]\n    nlinarith\n  rw [neg_div]\n  linarith\n\ntheorem arrhenius_grid_max_error (Δ : ℝ) (hΔ : 0 < Δ) :\n    ∀ T ∈ ({0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0} : Set ℝ),\n    Real.log (1 + Real.exp (-Δ / T)) ≤ Real.exp (-Δ) := by\n  intro T hT\n  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hT\n  rcases hT with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>\n    exact grid_step Δ _ hΔ (by norm_num) (by norm_num)\n\ntheorem arrhenius_tmin_bound (Δ : ℝ) (hΔ : 2 ≤ Δ) :\n    Real.log (1 + Real.exp (-Δ / 0.05)) ≤ Real.exp (-40 : ℝ) := by\n  have hΔpos : 0 < Δ := by linarith\n  have step1 : Real.log (1 + Real.exp (-Δ / 0.05)) ≤ Real.exp (-Δ / 0.05) :=\n    arrhenius_error_bound Δ 0.05 hΔpos (by norm_num)\n  have step2 : Real.exp (-Δ / 0.05) = Real.exp (-20 * Δ) := by\n    congr 1; ring\n  have step3 : Real.exp (-20 * Δ) ≤ Real.exp (-40 : ℝ) := by\n    apply Real.exp_le_exp.mpr\n    linarith\n  linarith [step2 ▸ step3]",
+  "proof_explanation": "Two theorems formalize the Arrhenius LLM inference framework. Theorem A (thresh_window_nonempty): proves the operating window [T_thresh, T_TURN] is non-empty when sample count N exceeds answer choices K. Key steps: (1) Real.log_pos establishes log K, log N > 0 since K, N > 1; (2) Real.log_lt_log gives log K < log N from K < N; (3) div_lt_div_iff₀ reduces Ea/log N < Ea/log K to Ea*log K < Ea*log N; (4) mul_lt_mul_of_pos_left closes with Ea > 0. Theorem B (arrhenius_error_bound): proves log(1+exp(-Δ/T)) ≤ exp(-Δ/T) by a one-step calc using Real.log_le_sub_one_of_pos (log x ≤ x-1). The grid theorem factors out a helper (grid_step) handling T ≤ 1: chains arrhenius_error_bound + Real.exp_le_exp.mpr + neg_div rewrite + linarith. The tmin corollary (arrhenius_tmin_bound) chains arrhenius_error_bound at T=0.05 with exp monotonicity to get error ≤ exp(-40) < 4.5e-18. The algebraic identity lemma (arrhenius_error_eq) proves log(1+exp(x))-x = log(1+exp(-x)) via: substitute x=log(exp(x)) in the subtracted term, apply Real.log_div, then field_simp+ring for the division identity.",
+  "lemmas": [
+    {
+      "name": "thresh_window_nonempty",
+      "statement": "theorem thresh_window_nonempty (Ea N K : ℝ) (hEa : 0 < Ea) (hK : 1 < K) (hN : K < N) : Ea / Real.log N < Ea / Real.log K",
+      "compiler_out": "{\"success\": true, \"verified\": true, \"has_sorries\": false}",
+      "is_compiler_verified": true,
+      "tactic": "div_lt_div_iff₀, mul_lt_mul_of_pos_left"
+    },
+    {
+      "name": "arrhenius_error_eq",
+      "statement": "lemma arrhenius_error_eq (Δ T : ℝ) (hΔ : 0 < Δ) (hT : 0 < T) : Real.log (1 + Real.exp (Δ / T)) - Δ / T = Real.log (1 + Real.exp (-Δ / T))",
+      "compiler_out": "{\"success\": true, \"verified\": true, \"has_sorries\": false}",
+      "is_compiler_verified": true,
+      "tactic": "Real.log_div, Real.exp_neg, field_simp, ring"
+    },
+    {
+      "name": "arrhenius_error_bound",
+      "statement": "theorem arrhenius_error_bound (Δ T : ℝ) (hΔ : 0 < Δ) (hT : 0 < T) : Real.log (1 + Real.exp (-Δ / T)) ≤ Real.exp (-Δ / T)",
+      "compiler_out": "{\"success\": true, \"verified\": true, \"has_sorries\": false}",
+      "is_compiler_verified": true,
+      "tactic": "calc, Real.log_le_sub_one_of_pos"
+    },
+    {
+      "name": "arrhenius_grid_max_error",
+      "statement": "theorem arrhenius_grid_max_error (Δ : ℝ) (hΔ : 0 < Δ) : ∀ T ∈ ({0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0} : Set ℝ), Real.log (1 + Real.exp (-Δ / T)) ≤ Real.exp (-Δ)",
+      "compiler_out": "{\"success\": true, \"verified\": true, \"has_sorries\": false}",
+      "is_compiler_verified": true,
+      "tactic": "rcases, grid_step helper, norm_num"
+    },
+    {
+      "name": "arrhenius_tmin_bound",
+      "statement": "theorem arrhenius_tmin_bound (Δ : ℝ) (hΔ : 2 ≤ Δ) : Real.log (1 + Real.exp (-Δ / 0.05)) ≤ Real.exp (-40 : ℝ)",
+      "compiler_out": "{\"success\": true, \"verified\": true, \"has_sorries\": false}",
+      "is_compiler_verified": true,
+      "tactic": "arrhenius_error_bound, Real.exp_le_exp.mpr, linarith"
+    }
+  ]
+}

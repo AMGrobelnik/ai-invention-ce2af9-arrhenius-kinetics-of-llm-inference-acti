@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "evaluation_name": "Phi-4 Arrhenius Re-Analysis",
+    "description": "Zero-API-cost re-analysis of phi-4 Arrhenius experiment. Produces Delta-approx accuracy, Wilson CIs, scatter plot, power analysis, deployment pseudocode, and dataset discrepancy note.",
+    "source_experiment": "art_Ux9ENkZVYpvn",
+    "n_valid_oc_instances": 30,
+    "delta_approx_accuracy": {
+      "T_operating_delta_approx_BON16": 0.8581706951239025,
+      "n_instances": 30,
+      "n_skipped": 0,
+      "note": "Uses single-call Delta instead of regression Ea; T_thresh=Delta/ln(16)+0.3, snapped to grid {0.05,0.1,0.2,0.3,0.5,0.7,1.0}",
+      "comparison_to_regression_Ea": "T_operating(regression Ea, delta=0.3) = 0.900"
+    },
+    "table1_wilson_cis": {
+      "N4": {
+        "k": 16,
+        "n": 17,
+        "fraction": 0.9411764705882353,
+        "wilson_lo": 0.7301796936242461,
+        "wilson_hi": 0.9895395990150025,
+        "display": "94.1% [73.0%, 99.0%]"
+      },
+      "N8": {
+        "k": 21,
+        "n": 25,
+        "fraction": 0.84,
+        "wilson_lo": 0.6534637839282114,
+        "wilson_hi": 0.9359654854332355,
+        "display": "84.0% [65.3%, 93.6%]"
+      },
+      "N16": {
+        "k": 26,
+        "n": 28,
+        "fraction": 0.9285714285714286,
+        "wilson_lo": 0.7735463743160095,
+        "wilson_hi": 0.9801879358846942,
+        "display": "92.9% [77.4%, 98.0%]"
+      },
+      "N32": {
+        "k": 30,
+        "n": 30,
+        "fraction": 1.0,
+        "wilson_lo": 0.8864866068260312,
+        "wilson_hi": 0.9999999999999999,
+        "display": "100.0% [88.6%, 100.0%]"
+      },
+      "window_fraction": {
+        "k": 28,
+        "n": 30,
+        "fraction": 0.9333333333333333,
+        "wilson_lo": 0.7867654163738308,
+        "wilson_hi": 0.9815229762087295,
+        "display": "93.3% [78.7%, 98.2%]"
+      }
+    },
+    "scatter_plot_path": "t_operating_vs_t_pref.png",
+    "power_analysis": {
+      "observed_rho": 0.674,
+      "observed_n": 30,
+      "fisher_z_obs": 0.8180369348413565,
+      "se": 0.19245008972987526,
+      "observed_power_pct": 98.90080114279228,
+      "n_for_rho04_80pct_power": 47,
+      "n4_wilson_lo": 0.7301796936242461,
+      "n4_wilson_hi": 0.9895395990150025,
+      "interpretation": "The study is well-powered for the confirmed ρ=0.674 result (98.9% power at n=30); n≈47 needed to detect ρ=0.4 at 80% power. The N=4 Wilson CI [73.0%, 99.0%] still exceeds the 60% criterion."
+    },
+    "deployment_algorithm_pseudocode": "def route_instance(prompt, N=16, logprob_threshold=-10.0):\n    # CALL 1: greedy forward pass with logprobs (1 API call)\n    greedy_out, logprobs = call_model(prompt, temperature=0, logprobs=True)\n    ...",
+    "dataset_discrepancy_note": "The catalysis set (50 items) is a stratified subset of the 500-item main set; the temperature-sweep analysis (Sections 4.3–4.8) uses all 450 remaining main-set OC instances (not the 50 catalysis items..."
+  },
+  "metrics_agg": {
+    "delta_approx_BON16_accuracy": 0.8581706951239025,
+    "delta_approx_BON16_accuracy_pct": 85.8,
+    "regression_Ea_BON16_accuracy_pct": 90.0,
+    "accuracy_delta_vs_regression_pp": -4.2,
+    "N4_wilson_lo_pct": 73.0,
+    "N4_wilson_hi_pct": 99.0,
+    "N16_wilson_lo_pct": 77.4,
+    "N32_wilson_lo_pct": 88.6,
+    "window_fraction_wilson_lo_pct": 78.7,
+    "observed_power_pct": 98.9,
+    "n_for_rho04_80pct_power": 47.0,
+    "fisher_z_obs": 0.818,
+    "observed_rho": 0.674
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "What is the term for a sub-optimal but acceptable outcome of negotiations between parties?\n\nA. Accepting\nB. Settling\nC. Negotiating\nD. Mediating\nE. Bargaining\nF. Satisficing\nG. Conceding\nH. Collaborat...",
+          "output": "F",
+          "metadata_question_id": 630,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.203433",
+          "predict_arrhenius_R2": "0.284757",
+          "predict_Delta": "0.484375",
+          "predict_T_pref": "1.0",
+          "predict_T_thresh_N16_simplified": "0.0734",
+          "eval_bon16_delta_approx": 0.8146979811148158
+        },
+        {
+          "input": "The primary objective of team-based selling is to\n\nA. equitably manage the sales bonus pool\nB. increase the competitiveness within the sales team\nC. create multiple points of contact between the custo...",
+          "output": "H",
+          "metadata_question_id": 197,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.127499",
+          "predict_arrhenius_R2": "0.985372",
+          "predict_Delta": "0.125",
+          "predict_T_pref": "1.0",
+          "predict_T_thresh_N16_simplified": "0.046",
+          "eval_bon16_delta_approx": 0.9997178890092544
+        },
+        {
+          "input": "During a riot, Mr. Winter's car was overturned causing $346.50 in damage.Mr. Winter had $50-deductible col-lision insurance, but no comprehensive coverage. How much will theinsurance company pay Mr. W...",
+          "output": "E",
+          "metadata_question_id": 92,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "predict_is_oc_error": "true",
+          "predict_arrhenius_Ea": "0.348015",
+          "predict_arrhenius_R2": "0.89983",
+          "predict_Delta": "0.765625",
+          "predict_T_pref": "0.7",
+          "predict_T_thresh_N16_simplified": "0.1255",
+          "eval_bon16_delta_approx": 0.8146979811148158
+        }
+      ]
+    }
+  ]
+}

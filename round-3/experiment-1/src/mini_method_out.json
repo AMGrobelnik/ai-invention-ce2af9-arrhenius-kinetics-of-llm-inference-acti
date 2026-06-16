@@ -1,0 +1,286 @@
+{
+  "metadata": {
+    "experiment_id": "iter3_exp1_arrhenius_weak_model",
+    "model_name": "openai/gpt-4o-mini",
+    "model_selection_log": [
+      {
+        "model": "openai/gpt-4o-mini",
+        "logprobs_ok": true,
+        "oc_count": 3,
+        "oc_rate": 0.1,
+        "valid_count": 30
+      },
+      {
+        "model": "qwen/qwen-2.5-7b-instruct",
+        "logprobs_ok": false,
+        "oc_rate": 0.0
+      },
+      {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "logprobs_ok": false,
+        "oc_rate": 0.0
+      }
+    ],
+    "pilot_gate_passed": false,
+    "pilot_oc_rate": 0.25,
+    "pilot_rising_frac": 0.04,
+    "n_oc_instances_main": 11,
+    "n_valid_fit_instances": 2,
+    "valid_fit_rate": 0.18181818181818182,
+    "two_token_dominance_confirmed": false,
+    "rho_ea_delta": null,
+    "p_ea_delta": null,
+    "cv_log_A": null,
+    "mean_log_A": null,
+    "median_R2_arrhenius": 0.6910107586948595,
+    "fraction_R2_gt_085": 0.5,
+    "median_R2_advantage_over_linear": -0.13966189760287995,
+    "T_TURN": 0.2,
+    "fraction_thresh_lt_TURN": 0.5,
+    "window_nontrivial_frac": 1.0,
+    "thresh_lower_bound_by_N": {
+      "4": {
+        "simple": 1.0,
+        "approx": 0.0,
+        "A_corrected": 1.0,
+        "tracking_A": 1.0,
+        "n_instances": 1
+      },
+      "8": {
+        "simple": 1.0,
+        "approx": 0.0,
+        "A_corrected": 1.0,
+        "tracking_A": 0.0,
+        "n_instances": 1
+      },
+      "16": {
+        "simple": 1.0,
+        "approx": 0.0,
+        "A_corrected": 1.0,
+        "tracking_A": 0.0,
+        "n_instances": 1
+      },
+      "32": {
+        "simple": 1.0,
+        "approx": 0.5,
+        "A_corrected": 1.0,
+        "tracking_A": 0.0,
+        "n_instances": 2
+      }
+    },
+    "accuracy_table": {
+      "T_op_regression": {
+        "accuracy": 0.415,
+        "ci_low": 0.09452865480086614,
+        "ci_high": 0.9054713451991339,
+        "n_instances": 2,
+        "api_calls_per_instance": 351
+      },
+      "T_op_approx_delta": {
+        "accuracy": 0.8109999999999999,
+        "ci_low": 0.34237195288961925,
+        "ci_high": 1.0,
+        "n_instances": 2,
+        "api_calls_per_instance": 1
+      },
+      "fixed_T07": {
+        "accuracy": 0.601,
+        "ci_low": 0.09452865480086614,
+        "ci_high": 0.9054713451991339,
+        "n_instances": 2,
+        "api_calls_per_instance": 16
+      },
+      "fixed_T10": {
+        "accuracy": 0.8109999999999999,
+        "ci_low": 0.34237195288961925,
+        "ci_high": 1.0,
+        "n_instances": 2,
+        "api_calls_per_instance": 16
+      },
+      "TURN": {
+        "accuracy": 0.463,
+        "ci_low": 0.09452865480086614,
+        "ci_high": 0.9054713451991339,
+        "n_instances": 2,
+        "api_calls_per_instance": 30
+      }
+    },
+    "rho_ea_tpref": null,
+    "p_ea_tpref": null,
+    "partial_rho_ea_tpref": null,
+    "p_partial": null,
+    "R2_ea_tpref": null,
+    "catalysis": {
+      "n_instances": 1,
+      "n_cot_reduces_ea": 0,
+      "catalysis_fraction": 0.0,
+      "catalysis_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "paired_t_pvalue": null
+    },
+    "total_cost_usd": 0.7589734200000369,
+    "temp_grid": [
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      1.0
+    ],
+    "n_samples_per_temp": 50,
+    "N_BON": 16,
+    "turn_diagnostics": {
+      "T_TURN": 0.2,
+      "H_by_T": {
+        "0.05": 0.06036946605128255,
+        "0.1": 0.0718532800336085,
+        "0.2": 0.10798122109628781,
+        "0.3": 0.14623574668198144,
+        "0.5": 0.21161321387937324,
+        "0.7": 0.32990925827466006,
+        "1.0": 0.401540405748246
+      },
+      "n_instances_used": 11,
+      "method": "entropy_inflection_from_sampling"
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "______ regulation goes further than the ______ that CSOs have with businesses, as it also concerns _______of such processes.\n\nA. Ethical, Interactions, Mechanics\nB. Civil, Relations, Outcomes\nC. Cultural, Relations, Outcomes\nD. Economic, Relations, Mechanics\nE. Financial, Interactions, Outcomes\nF. Human rights, Relations, Mechanics\nG. Environmental, Relations, Mechanics\nH. Political, Interactions, Outcomes\nI. Social, Interactions, Outcomes\nJ. Legal, Interactions, Mechanics",
+          "output": "B",
+          "metadata_P_hat_T005": 0.0,
+          "metadata_CI_lo_T005": 0.0,
+          "metadata_CI_hi_T005": 0.07135003417431873,
+          "metadata_P_hat_T01": 0.0,
+          "metadata_CI_lo_T01": 0.0,
+          "metadata_CI_hi_T01": 0.07135003417431873,
+          "metadata_P_hat_T02": 0.0,
+          "metadata_CI_lo_T02": 0.0,
+          "metadata_CI_hi_T02": 0.07135003417431873,
+          "metadata_P_hat_T03": 0.0,
+          "metadata_CI_lo_T03": 0.0,
+          "metadata_CI_hi_T03": 0.07135003417431873,
+          "metadata_P_hat_T05": 0.0,
+          "metadata_CI_lo_T05": 0.0,
+          "metadata_CI_hi_T05": 0.07135003417431873,
+          "metadata_P_hat_T07": 0.0,
+          "metadata_CI_lo_T07": 0.0,
+          "metadata_CI_hi_T07": 0.07135003417431873,
+          "metadata_P_hat_T10": 0.0,
+          "metadata_CI_lo_T10": 0.0,
+          "metadata_CI_hi_T10": 0.07135003417431873,
+          "metadata_question_id": 306,
+          "metadata_subject": "business",
+          "metadata_split": "main_set",
+          "metadata_Delta": 0.375,
+          "metadata_n_competing": 6,
+          "metadata_valid_fit": false,
+          "metadata_Ea": null,
+          "metadata_log_A": null,
+          "metadata_A_hat": null,
+          "metadata_R2_arr": null,
+          "metadata_R2_linear": null,
+          "metadata_R2_exp": null,
+          "metadata_R2_pow": null,
+          "metadata_R2_advantage": null,
+          "metadata_T_pref": 0.05
+        },
+        {
+          "input": "What is personal (ratione personae) immunity?\n\nA. Personal immunity is given to individuals for their private conduct, not their public conduct\nB. Personal immunity is afforded to all physical persons\nC. Personal immunity is afforded to all State officials, regardless of their conduct\nD. Personal immunity is only given to individuals who have committed a crime in a public capacity\nE. Personal immunity is afforded only to particular persons irrespective if their conduct was undertaken in a private or public capacity\nF. Personal immunity is given to all individuals, regardless of their conduct\nG. Personal immunity is that which is afforded in a personal capacity and hence does not cover conduct of the State as such\nH. Personal immunity is afforded to State officials for conduct undertaken in a public capacity\nI. Personal immunity is afforded to State officials for conduct undertaken in a private capacity.\nJ. Personal immunity is afforded only to particular persons if their conduct was undertaken in a public capacity",
+          "output": "E",
+          "metadata_P_hat_T005": 0.0,
+          "metadata_CI_lo_T005": 0.0,
+          "metadata_CI_hi_T005": 0.07135003417431873,
+          "metadata_P_hat_T01": 0.0,
+          "metadata_CI_lo_T01": 0.0,
+          "metadata_CI_hi_T01": 0.07135003417431873,
+          "metadata_P_hat_T02": 0.02,
+          "metadata_CI_lo_T02": 0.0035391680889764604,
+          "metadata_CI_hi_T02": 0.10495686471836953,
+          "metadata_P_hat_T03": 0.06,
+          "metadata_CI_lo_T03": 0.020614596364630478,
+          "metadata_CI_hi_T03": 0.16217343370877002,
+          "metadata_P_hat_T05": 0.1,
+          "metadata_CI_lo_T05": 0.04347512399157111,
+          "metadata_CI_hi_T05": 0.2136049033478839,
+          "metadata_P_hat_T07": 0.2,
+          "metadata_CI_lo_T07": 0.11243629945973886,
+          "metadata_CI_hi_T07": 0.3303737210448524,
+          "metadata_P_hat_T10": 0.32,
+          "metadata_CI_lo_T10": 0.20758044093999403,
+          "metadata_CI_hi_T10": 0.45810557136276076,
+          "metadata_question_id": 976,
+          "metadata_subject": "law",
+          "metadata_split": "main_set",
+          "metadata_Delta": 1.625,
+          "metadata_n_competing": 4,
+          "metadata_valid_fit": true,
+          "metadata_Ea": 0.6544140475402666,
+          "metadata_log_A": -0.6850642522486383,
+          "metadata_A_hat": 0.5040578416845672,
+          "metadata_R2_arr": 0.9699686021520905,
+          "metadata_R2_linear": 0.9856696369198031,
+          "metadata_R2_exp": 0.8996568471852388,
+          "metadata_R2_pow": 0.9767932303068451,
+          "metadata_R2_advantage": -0.015701034767712674,
+          "metadata_T_pref": 1.0,
+          "metadata_T_thresh_simple_N16": 0.23602997526860423,
+          "metadata_T_thresh_approx_N16": 0.5860948603611414,
+          "metadata_T_thresh_A_N16": 0.313488084545923,
+          "metadata_T_emp_min_N16": 0.5,
+          "predict_T_op_regression": "H",
+          "predict_T_op_approx_delta": "H",
+          "predict_fixed_T07": "H",
+          "predict_fixed_T10": "H",
+          "predict_TURN": "H"
+        },
+        {
+          "input": "An employee worked for a hardware company in a city under an at-will-employment arrangement that paid the employee a monthly salary of $2,000. After two years, the owner of the hardware store told the employee it was time for them to enter into a more formalized employment agreement. The owner and the employee then both signed a written agreement drafted by the owner, whereby the employee agreed to work for a salary of $3,000 per month. The agreement further specified that either party had a right to terminate the contract by giving 60- days' notice to the other. Moreover, the agreement stipulated that if the employee's employment at the hardware store should be terminated, he would not be able to engage in any aspect of the hardware business for a period of two years within a 50-mile radius of the city. Finally, the agreement stated that should the employee violate this agreement, he would be liable to the hardware company for $1,500. The written agreement between the owner and the employee would most likely be held\n\nA. enforceable only with respect to the salary and termination provisions.\nB. enforceable only with respect to the salary provision.\nC. enforceable only with respect to the $1,500 penalty clause.\nD. enforceable only with respect to the termination provision.\nE. enforceable in all respects, except with regard to the $1,500 penalty clause.\nF. enforceable only with respect to the non-competition clause.\nG. enforceable in all respects, except with regard to the non-competition clause.\nH. unenforceable in all respects.\nI. enforceable in all respects, except with regard to the salary provision.\nJ. enforceable in all respects.",
+          "output": "A",
+          "metadata_P_hat_T005": 0.0,
+          "metadata_CI_lo_T005": 0.0,
+          "metadata_CI_hi_T005": 0.07135003417431873,
+          "metadata_P_hat_T01": 0.0,
+          "metadata_CI_lo_T01": 0.0,
+          "metadata_CI_hi_T01": 0.07135003417431873,
+          "metadata_P_hat_T02": 0.0,
+          "metadata_CI_lo_T02": 0.0,
+          "metadata_CI_hi_T02": 0.07135003417431873,
+          "metadata_P_hat_T03": 0.0,
+          "metadata_CI_lo_T03": 0.0,
+          "metadata_CI_hi_T03": 0.07135003417431873,
+          "metadata_P_hat_T05": 0.0,
+          "metadata_CI_lo_T05": 6.938893903907228e-18,
+          "metadata_CI_hi_T05": 0.0755601711983887,
+          "metadata_P_hat_T07": 0.0,
+          "metadata_CI_lo_T07": 0.0,
+          "metadata_CI_hi_T07": 0.08567044886890744,
+          "metadata_P_hat_T10": 0.0,
+          "metadata_CI_lo_T10": 0.0,
+          "metadata_CI_hi_T10": 0.09181293258383999,
+          "metadata_question_id": 1764,
+          "metadata_subject": "law",
+          "metadata_split": "main_set",
+          "metadata_Delta": 0.125,
+          "metadata_n_competing": 4,
+          "metadata_valid_fit": false,
+          "metadata_Ea": null,
+          "metadata_log_A": null,
+          "metadata_A_hat": null,
+          "metadata_R2_arr": null,
+          "metadata_R2_linear": null,
+          "metadata_R2_exp": null,
+          "metadata_R2_pow": null,
+          "metadata_R2_advantage": null,
+          "metadata_T_pref": 0.05
+        }
+      ]
+    }
+  ]
+}

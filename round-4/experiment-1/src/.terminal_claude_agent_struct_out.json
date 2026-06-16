@@ -1,0 +1,11 @@
+{
+  "title": "Arrhenius Kinetics Two-Token Dominance Test on Ministral-8B with McNemar BON",
+  "layman_summary": "Tests whether a small 8B language model shows the same 'energy barrier' pattern seen in larger models on multiple-choice questions, and whether knowing this barrier lets us pick better sampling temperatures to improve accuracy.",
+  "summary": "Full 9-phase Arrhenius Kinetics of LLM Inference protocol executed on mistralai/ministral-8b-2512 (selected via model smoke test from candidates: ministral-8b-2512, gemma-4-26b, phi-4) on TIGER-Lab/MMLU-Pro (700 examples: 200 pilot, 450 main, 50 catalysis). Key additions over iter_2: (A) model smoke-test selection loop with logprob verification — ministral-8b-2512 selected with 100% logprob rate and 70% OC rate; (B) explicit two-token-dominance PASS/FAIL verdict: rho(Ea,Delta)>0.6 AND CV(log A)<0.4 must both hold simultaneously; (C) DUAL actual N=16 BON sampling comparing regression-Ea strategy (T_simplified+delta) vs Delta-approx strategy (T_approx+delta) for delta in {0.2, 0.3, 0.4} against fixed T=0.7, T=1.0, and TURN-adapted baselines; (D) McNemar's exact test on per-instance boolean BON outcome pairs for all three delta values. Phase 1 found 102/200 pilot OC errors (51% OC rate) with 0 missing logprobs at $0.014. The Arrhenius fit (log P(correct|T) = -Ea/T + log A) is fitted per overconfident-error instance with bootstrap 95% CI on R2. T_thresh validated for N=4/8/16/32 as lower bound on empirical threshold. T_TURN computed via entropy inflection at 13 temperatures. Step 8 checks Ea predicts T_pref (Spearman rho). Step 9 catalysis test (CoT vs 4-shot vs zero-shot) on 20 examples. Budget: $4 hard limit with adaptive N_SAMPLES reduction at 50% budget. Model: mistralai/ministral-8b-2512 ($0.15/M tokens), arc_fallback=False, MMLU-Pro MCQA 10-option format.",
+  "out_expected_files": {
+    "script": "method.py",
+    "full_output": "full_method_out.json",
+    "mini_output": "mini_method_out.json",
+    "preview_output": "preview_method_out.json"
+  }
+}

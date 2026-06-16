@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "required": [
+    "question_id",
+    "subject",
+    "question_text",
+    "choices",
+    "num_choices",
+    "correct_answer_letter",
+    "correct_answer_index",
+    "correct_answer_text",
+    "split"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "integer"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "question_text": {
+      "type": "string",
+      "minLength": 5
+    },
+    "choices": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2
+    },
+    "num_choices": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "correct_answer_letter": {
+      "type": "string",
+      "pattern": "^[A-J]$"
+    },
+    "correct_answer_index": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "correct_answer_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "split": {
+      "type": "string",
+      "enum": [
+        "pilot_set",
+        "main_set",
+        "catalysis_set"
+      ]
+    }
+  }
+}

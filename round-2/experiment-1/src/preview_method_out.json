@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "experiment_id": "arrhenius_iter2_exp1",
+    "model": "microsoft/phi-4",
+    "model_note": "microsoft/phi-4 via NextBit on OpenRouter (logprob-confirmed substitute for qwen/qwen-2.5-7b-instruct which lacks logprob support on OpenRouter)",
+    "dataset": "TIGER-Lab/MMLU-Pro",
+    "n_oc_instances": 30,
+    "cumulative_cost_usd": 0.1258,
+    "total_api_calls": 9676,
+    "failed_api_calls": 0,
+    "pilot_gate": {
+      "gate_passed": false,
+      "gate_fraction": 0.14,
+      "n_oc_pilot": 100,
+      "n_tested": 50,
+      "two_point_arrhenius": [
+        {
+          "qid": 2443,
+          "Ea_2pt": 0.22396993365350684
+        }
+      ]
+    },
+    "step5_Ea_vs_Delta": {
+      "n_instances": 30,
+      "spearman_Ea_Delta": {
+        "rho": 0.10590722059082595,
+        "p": 0.5775275854208703,
+        "ci_low": -0.3084376170039624,
+        "ci_high": 0.5430746973998561,
+        "n": 30
+      },
+      "logA_mean": -0.9319770817575631,
+      "logA_std": 1.0185106452832782,
+      "logA_CV": 1.0928494543691207,
+      "spearman_deviation_vs_competition": {
+        "rho": -0.23534518294926574,
+        "p": 0.2105918085729472,
+        "ci_low": -0.5878469949643462,
+        "ci_high": 0.1629662414595117,
+        "n": 30
+      }
+    },
+    "step6_T_thresh_validation": {
+      "by_N": {
+        "4": {
+          "n_total": 17,
+          "fraction_simplified_is_lower_bound": 0.9411764705882353,
+          "fraction_approx_is_lower_bound": 0.5882352941176471,
+          "fraction_simplified_within_20pct": 0.17647058823529413,
+          "fraction_approx_within_20pct": 0.11764705882352941
+        },
+        "8": {
+          "n_total": 25,
+          "fraction_simplified_is_lower_bound": 0.84,
+          "fraction_approx_is_lower_bound": 0.76,
+          "fraction_simplified_within_20pct": 0.12,
+          "fraction_approx_within_20pct": 0.32
+        },
+        "16": {
+          "n_total": 28,
+          "fraction_simplified_is_lower_bound": 0.9285714285714286,
+          "fraction_approx_is_lower_bound": 0.8214285714285714,
+          "fraction_simplified_within_20pct": 0.03571428571428571,
+          "fraction_approx_within_20pct": 0.14285714285714285
+        },
+        "32": {
+          "n_total": 30,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.7333333333333333,
+          "fraction_simplified_within_20pct": 0.1,
+          "fraction_approx_within_20pct": 0.3
+        }
+      },
+      "window_fraction_T_TURN_above_T_thresh": 0.9333333333333333
+    },
+    "step7_accuracy_comparison": {
+      "accuracy": {
+        "T_operating_delta_0.2": 0.8666666666666667,
+        "T_operating_delta_0.3": 0.9,
+        "T_operating_delta_0.4": 0.8,
+        "fixed_T07": 0.8333333333333334,
+        "TURN_adapted": 0.9666666666666667,
+        "T_TURN_dataset_level": 1.4000000000000001,
+        "fixed_T10": 0.9333333333333333,
+        "n_instances": 30
+      },
+      "api_call_counts": {
+        "T_operating_delta_0.2": 480,
+        "T_operating_delta_0.3": 480,
+        "T_operating_delta_0.4": 480,
+        "fixed_T07": 480,
+        "TURN_adapted": 480,
+        "fixed_T10": 480
+      }
+    },
+    "step8_Ea_predicts_Tpref": {
+      "n_instances": 30,
+      "spearman_Ea_Tpref": {
+        "rho": 0.6735844869283102,
+        "p": 4.5072399298560374e-05,
+        "ci_low": 0.39042883702037273,
+        "ci_high": 0.843332735712039,
+        "n": 30
+      },
+      "partial_spearman_controlling_subject": {
+        "partial_rho": 0.47517267021594056,
+        "partial_p": 0.007964511016950013,
+        "n": 30
+      },
+      "R2_approx": 0.4537160610304749
+    },
+    "step9_catalysis": {
+      "n_total": 50,
+      "n_valid": 3,
+      "n_cot_reduces_Ea": 1,
+      "fraction_cot_reduces_Ea": 0.3333333333333333,
+      "ci_fraction_cot_reduces": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "n_catalysis_dominant": 0,
+      "fraction_catalysis_given_reduces": 0.0,
+      "ci_catalysis": [
+        0.0,
+        0.7934567085261071
+      ],
+      "n_four_shot_reduces_Ea": 1,
+      "fraction_four_shot_reduces_Ea": 0.3333333333333333
+    },
+    "aggregate": {
+      "n_instances": 30,
+      "R2_distribution": {
+        "median": 0.8477209317047582,
+        "mean": 0.7436893346781897,
+        "p25": 0.678958001528889,
+        "p75": 0.9258982876394141,
+        "p10": 0.27878051780765073,
+        "p90": 0.9779044951474403
+      },
+      "Ea_distribution": {
+        "median": 0.35147639840313283,
+        "mean": 0.5576535426887868,
+        "std": 0.6931761435338488,
+        "p25": 0.15799866499734633,
+        "p75": 0.7009028650749958
+      },
+      "T_TURN_distribution": {
+        "median": 1.4000000000000001,
+        "mean": 1.2166666666666663
+      },
+      "window_fraction": 0.9333333333333333,
+      "confirm_flags": {
+        "C1_median_R2_gt_085": false,
+        "C2_spearman_Ea_Delta_gt_05": false,
+        "C3_lower_bound_N16_gt_060": true,
+        "C4_window_fraction_ge_070": true,
+        "C6_Ea_predicts_Tpref": true,
+        "C7_T_operating_beats_fixed": true,
+        "C9_catalysis_fraction_gt_050": false
+      },
+      "n_criteria_confirmed": 4,
+      "verdict": "CONFIRM"
+    },
+    "verdict": "CONFIRM"
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "Once a train pulls out of a station, or an aeroplane takes off or a film starts, those seats are lost and can never be sold. This is referred to as:\n\nA. Immeasurability.\nB. Impalpability.\nC. Variabili...",
+          "output": "F",
+          "metadata_question_id": 79,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-marketing",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "_______ such as bitcoin are becoming increasingly mainstream and have a whole host of associated ethical implications, for example, they are______ and more ______. However, they have also been used to...",
+          "output": "A",
+          "metadata_question_id": 123,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-business_ethics",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "John Wilson retired at age 62 with average yearly earnings of $5400. His wife was also 62 when he retired. How much do the Wilsons receive each month?\n\nA. $262.15\nB. $150.25\nC. $475.00\nD. $294.50\nE. $...",
+          "output": "D",
+          "metadata_question_id": 177,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "stemez-Business",
+          "predict_is_oc_error": "false"
+        }
+      ]
+    }
+  ]
+}

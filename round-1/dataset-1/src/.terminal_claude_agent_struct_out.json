@@ -1,0 +1,15 @@
+{
+  "title": "MMLU-Pro MCQA Dataset: 700 Examples Across 14 Subjects for Arrhenius Experiment",
+  "layman_summary": "This artifact downloads the MMLU-Pro multiple-choice benchmark from HuggingFace, filters and splits 700 questions from 14 academic subjects into pilot, main, and catalysis sets ready for LLM inference-energy experiments.",
+  "summary": "Dataset artifact providing TIGER-Lab/MMLU-Pro examples formatted for the Arrhenius inference-energy experiment.\n\nSource: TIGER-Lab/MMLU-Pro (HuggingFace, MIT license, 168K downloads, NeurIPS 2024). Downloaded the test split (12,032 rows). All 4 quality filters passed with 0 rejections: F1 (non-empty options, ≥2 choices), F2 (answer letter consistent with answer_index), F3 (answer in A–J), F4 (answer text non-empty). 700 unique examples selected across three fixed-seed (seed=42) splits: pilot_set=200, main_set=500 (stratified across 14 subjects), catalysis_set=50 (subset of main_set).\n\nEach example in full_data_out.json follows the exp_sel_data_out schema:\n- `input`: formatted MCQA prompt with question text and lettered choices (A–J)\n- `output`: correct answer letter (A–J, single token in Qwen-2.5-7B and Llama-3-8B)\n- `metadata_subject`: one of 14 MMLU-Pro categories (biology, business, chemistry, computer science, economics, engineering, health, history, law, math, other, philosophy, physics, psychology) — available for partial-correlation controls in Step 8\n- `metadata_wrong_answer_letter/index/text`: baseline wrong answer for computing Δ = logit(wrong) − logit(correct)\n- `metadata_split`: pilot_set / main_set / catalysis_set\n- `metadata_correct_answer_index`, `metadata_num_choices`, `metadata_question_id`, `metadata_src`, `metadata_task_type`\n- `answer_token_id_hint`: null (compute at runtime via AutoTokenizer — Qwen tokenizer is ~14GB, skipped per plan F-B fallback)\n\nFiles: full_data_out.json (902KB, 700 examples), mini_data_out.json (3 examples), preview_data_out.json (3 examples truncated). Schema validated via aii-json exp_sel_data_out format. pyproject.toml with all pinned dependencies included for reproducibility.",
+  "out_expected_files": {
+    "script": "data.py",
+    "datasets": [
+      {
+        "full": ["full_data_out.json"],
+        "mini": "mini_data_out.json",
+        "preview": "preview_data_out.json"
+      }
+    ]
+  }
+}

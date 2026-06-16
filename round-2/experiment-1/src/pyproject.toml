@@ -1,0 +1,30 @@
+[project]
+name = "arrhenius-llm"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohappyeyeballs==2.6.2",
+    "aiohttp==3.14.1",
+    "aiosignal==1.4.0",
+    "attrs==26.1.0",
+    "frozenlist==1.8.0",
+    "idna==3.18",
+    "joblib==1.5.3",
+    "loguru==0.7.3",
+    "multidict==6.7.1",
+    "narwhals==2.22.1",
+    "numpy==2.4.6",
+    "packaging==26.2",
+    "pandas==3.0.3",
+    "patsy==1.0.2",
+    "propcache==0.5.2",
+    "python-dateutil==2.9.0.post0",
+    "scikit-learn==1.9.0",
+    "scipy==1.17.1",
+    "six==1.17.0",
+    "statsmodels==0.14.6",
+    "threadpoolctl==3.6.0",
+    "tqdm==4.68.2",
+    "typing-extensions==4.15.0",
+    "yarl==1.24.2",
+]

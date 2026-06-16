@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "experiment_id": "arrhenius_iter4_exp1",
+    "model_name": "mistralai/ministral-8b-2512",
+    "model_selection_log": {
+      "mistralai/ministral-8b-2512": {
+        "n_responses": 20,
+        "logprob_ok": 20,
+        "logprob_ok_rate": 1.0,
+        "oc_count": 14,
+        "oc_rate": 0.7,
+        "passes": true
+      }
+    },
+    "used_arc_fallback": false,
+    "dataset": "TIGER-Lab/MMLU-Pro",
+    "n_oc_instances": 7,
+    "n_valid_arrhenius_fits": 7,
+    "oc_rate_pilot": 0.51,
+    "valid_fit_rate": 1.0,
+    "cumulative_cost_usd": 0.4846,
+    "total_api_calls": 5243,
+    "failed_api_calls": 0,
+    "two_token_dominance_confirmed": false,
+    "rho_ea_delta": 0.0,
+    "cv_log_A": 0.40029217849600895,
+    "pilot_gate_passed": true,
+    "bon16_accuracy_regression": 0.8571428571428571,
+    "bon16_accuracy_delta_approx": 0.8571428571428571,
+    "bon16_accuracy_fixed_T07": 1.0,
+    "bon16_accuracy_fixed_T10": 0.8571428571428571,
+    "bon16_accuracy_TURN": 0.8571428571428571,
+    "mcnemar_p_regression_vs_T07": 1.0,
+    "mcnemar_p_approx_vs_T07": 1.0,
+    "mcnemar_p_approx_vs_regression": 1.0,
+    "pilot_gate": {
+      "gate_passed": true,
+      "gate_fraction": 0.25,
+      "n_oc_pilot": 102,
+      "n_tested": 20,
+      "two_point_arrhenius": []
+    },
+    "step5_Ea_vs_Delta": {
+      "n_instances": 7,
+      "spearman_Ea_Delta": {
+        "rho": 0.0,
+        "p": 1.0,
+        "ci_low": -0.766399770829501,
+        "ci_high": 0.9354143466934853,
+        "n": 7
+      },
+      "rho_ea_delta": 0.0,
+      "logA_mean": -1.5530587716171875,
+      "logA_std": 0.6216772790229796,
+      "logA_CV": 0.40029217849600895,
+      "cv_log_A": 0.40029217849600895,
+      "two_token_dominance_pass": false,
+      "spearman_deviation_vs_competition": {
+        "rho": -0.07715167498104596,
+        "p": 0.8694127120955288,
+        "ci_low": -0.9074852129730302,
+        "ci_high": 0.9074852129730302,
+        "n": 7
+      }
+    },
+    "step6_T_thresh_validation": {
+      "by_N": {
+        "4": {
+          "n_total": 5,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.8,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.4
+        },
+        "8": {
+          "n_total": 6,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.5,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.3333333333333333
+        },
+        "16": {
+          "n_total": 7,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 0.8571428571428571,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.2857142857142857
+        },
+        "32": {
+          "n_total": 7,
+          "fraction_simplified_is_lower_bound": 1.0,
+          "fraction_approx_is_lower_bound": 1.0,
+          "fraction_simplified_within_20pct": 0.0,
+          "fraction_approx_within_20pct": 0.14285714285714285
+        }
+      },
+      "window_fraction_T_TURN_above_T_thresh": 1.0
+    },
+    "step7_accuracy_comparison": {
+      "accuracy": {
+        "T_operating_regression_delta_0.2": 0.42857142857142855,
+        "T_operating_approx_delta_0.2": 1.0,
+        "T_operating_regression_delta_0.3": 0.8571428571428571,
+        "T_operating_approx_delta_0.3": 0.8571428571428571,
+        "T_operating_regression_delta_0.4": 1.0,
+        "T_operating_approx_delta_0.4": 1.0,
+        "fixed_T07": 1.0,
+        "fixed_T10": 0.8571428571428571,
+        "TURN_adapted": 0.8571428571428571,
+        "T_TURN_dataset_level": 0.7,
+        "n_instances": 7
+      },
+      "api_call_counts": {
+        "T_operating_regression_delta_0.2": 112,
+        "T_operating_approx_delta_0.2": 112,
+        "T_operating_regression_delta_0.3": 112,
+        "T_operating_approx_delta_0.3": 112,
+        "T_operating_regression_delta_0.4": 112,
+        "T_operating_approx_delta_0.4": 112,
+        "fixed_T07": 112,
+        "fixed_T10": 112,
+        "TURN_adapted": 112
+      },
+      "mcnemar": {
+        "delta_0.2": {
+          "mcnemar_p_regression_vs_T07": 0.125,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 0.125,
+          "n_discordant_reg_T07": 4
+        },
+        "delta_0.3": {
+          "mcnemar_p_regression_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 1.0,
+          "n_discordant_reg_T07": 1
+        },
+        "delta_0.4": {
+          "mcnemar_p_regression_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_T07": 1.0,
+          "mcnemar_p_approx_vs_regression": 1.0,
+          "n_discordant_reg_T07": 0
+        }
+      }
+    },
+    "step8_Ea_predicts_Tpref": {
+      "n_instances": 7,
+      "spearman_Ea_Tpref": {
+        "rho": 0.6182840223353118,
+        "p": 0.138895187937538,
+        "ci_low": -0.40000000000000013,
+        "ci_high": 1.0,
+        "n": 7
+      },
+      "partial_spearman_controlling_subject": {
+        "partial_rho": 0.6785714285714287,
+        "partial_p": 0.09375025395983135,
+        "n": 7
+      },
+      "R2_approx": 0.3822751322751323
+    },
+    "step9_catalysis": {
+      "n_total": 20,
+      "n_valid": 1,
+      "n_cot_reduces_Ea": 1,
+      "fraction_cot_reduces_Ea": 1.0,
+      "ci_fraction_cot_reduces": [
+        0.20654329147389294,
+        1.0
+      ],
+      "n_catalysis_dominant": 0,
+      "fraction_catalysis_given_reduces": 0.0,
+      "ci_catalysis": [
+        0.0,
+        0.7934567085261071
+      ],
+      "n_four_shot_reduces_Ea": 1,
+      "fraction_four_shot_reduces_Ea": 1.0
+    },
+    "aggregate": {
+      "n_instances": 7,
+      "R2_distribution": {
+        "median": 0.3816425120772944,
+        "mean": 0.37717913343127213,
+        "p25": 0.15804279450546732,
+        "p75": 0.5513493533553091,
+        "p10": 0.02819959779841215,
+        "p90": 0.756027490714496
+      },
+      "Ea_distribution": {
+        "median": 0.0850557030125376,
+        "mean": 0.11460103906473385,
+        "std": 0.18961114991991815,
+        "p25": 0.051762993050710734,
+        "p75": 0.1876990040208937
+      },
+      "T_TURN_distribution": {
+        "median": 0.7,
+        "mean": 0.8142857142857143
+      },
+      "window_fraction": 1.0,
+      "confirm_flags": {
+        "C1_median_R2_gt_085": false,
+        "C2_spearman_Ea_Delta_gt_05": false,
+        "C3_lower_bound_N16_gt_060": true,
+        "C4_window_fraction_ge_070": true,
+        "C6_Ea_predicts_Tpref": true,
+        "C7_T_operating_beats_fixed": false,
+        "C9_catalysis_fraction_gt_050": true
+      },
+      "n_criteria_confirmed": 4,
+      "verdict": "CONFIRM"
+    },
+    "verdict": "CONFIRM"
+  },
+  "datasets": [
+    {
+      "dataset": "TIGER-Lab/MMLU-Pro",
+      "examples": [
+        {
+          "input": "Once a train pulls out of a station, or an aeroplane takes off or a film starts, those seats are lost and can never be sold. This is referred to as:\n\nA. Immeasurability.\nB. Impalpability.\nC. Variability.\nD. Non-storability.\nE. Indivisibility.\nF. Perishability.\nG. Non-recoverability.\nH. Inseparability.\nI. Heterogeneity.\nJ. Intangibility.",
+          "output": "F",
+          "metadata_question_id": 79,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-marketing",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "_______ such as bitcoin are becoming increasingly mainstream and have a whole host of associated ethical implications, for example, they are______ and more ______. However, they have also been used to engage in _______.\n\nA. Cryptocurrencies, Cheap, Secure, Financial crime\nB. Traditional currency, Cheap, Unsecure, Charitable giving\nC. Cryptocurrencies, Cheap, Unsecure, Charitable giving\nD. Digital currencies, Cheap, Unsecure, Charitable giving\nE. Cryptocurrencies, Expensive, Secure, Financial Crime\nF. Cryptocurrencies, Expensive, Unsecure, Charitable giving\nG. Traditional currency, Expensive, Secure, Financial crime\nH. Traditional currency, Cheap, Secure, Financial crime\nI. Digital currencies, Expensive, Secure, Financial crime\nJ. Traditional currency, Expensive, Unsecure, Charitable giving",
+          "output": "A",
+          "metadata_question_id": 123,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "ori_mmlu-business_ethics",
+          "predict_is_oc_error": "false"
+        },
+        {
+          "input": "John Wilson retired at age 62 with average yearly earnings of $5400. His wife was also 62 when he retired. How much do the Wilsons receive each month?\n\nA. $262.15\nB. $150.25\nC. $475.00\nD. $294.50\nE. $410.80\nF. $345.70\nG. $94.00\nH. $5400\nI. $200.50\nJ. $125.00",
+          "output": "D",
+          "metadata_question_id": 177,
+          "metadata_subject": "business",
+          "metadata_split": "pilot_set",
+          "metadata_num_choices": 10,
+          "metadata_src": "stemez-Business",
+          "predict_is_oc_error": "false"
+        }
+      ]
+    }
+  ]
+}
