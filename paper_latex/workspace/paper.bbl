@@ -1,0 +1,94 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Wu et~al.(2025)Wu, Mirhoseini, and Tambe]{Wu2025}
+Yuheng Wu, Azalia Mirhoseini, and Thierry Tambe.
+\newblock On the role of temperature sampling in test-time scaling.
+\newblock \emph{ArXiv}, abs/2510.02611, 2025.
+\newblock \doi{10.48550/arXiv.2510.02611}.
+
+\bibitem[Du et~al.(2025)Du, Yang, and Welleck]{Du2025}
+Weihua Du, YiMing Yang, and S.~Welleck.
+\newblock Optimizing temperature for language models with multi-sample
+  inference.
+\newblock In \emph{International Conference on Machine Learning}, volume
+  abs/2502.05234, 2025.
+\newblock \doi{10.48550/arXiv.2502.05234}.
+
+\bibitem[Wang et~al.(2024)Wang, Ma, Zhang, Ni, Chandra, Guo, Ren, Arulraj, He,
+  Jiang, Li, Ku, Wang, Zhuang, Fan, Yue, and Chen]{Wang2024}
+Yubo Wang, Xueguang Ma, Ge~Zhang, Yuansheng Ni, Abhranil Chandra, Shiguang Guo,
+  Weiming Ren, Aaran Arulraj, Xuan He, Ziyan Jiang, Tianle Li, Max~W.F. Ku, Kai
+  Wang, Alex Zhuang, Rongqi Fan, Xiang Yue, and Wenhu Chen.
+\newblock Mmlu-pro: A more robust and challenging multi-task language
+  understanding benchmark.
+\newblock In \emph{Neural Information Processing Systems}, 2024.
+\newblock \doi{10.48550/arXiv.2406.01574}.
+
+\bibitem[Bridle(1989)]{Bridle1989}
+John~S. Bridle.
+\newblock Probabilistic interpretation of feedforward classification network
+  outputs, with relationships to statistical pattern recognition.
+\newblock In \emph{NATO ASI Series: Neurocomputing}, pages 227--236, 1989.
+\newblock \doi{10.1007/978-3-642-76153-9_28}.
+
+\bibitem[Hinton et~al.(2015)Hinton, Vinyals, and Dean]{Hinton2015}
+Geoffrey~E. Hinton, Oriol Vinyals, and Jeff Dean.
+\newblock Distilling the knowledge in a neural network.
+\newblock \emph{ArXiv}, abs/1503.02531, 2015.
+
+\bibitem[Chauvin et~al.(2025)Chauvin, Merrer, Ta{\"i}ani, and
+  Tr{\'e}dan]{Chauvin2025}
+Timoth{\'e}e Chauvin, Erwan~Le Merrer, Fran{\c{c}}ois Ta{\"i}ani, and Gilles
+  Tr{\'e}dan.
+\newblock Log probability tracking of {LLM} {APIs}.
+\newblock \emph{ArXiv}, abs/2512.03816, 2025.
+\newblock \doi{10.48550/arXiv.2512.03816}.
+
+\bibitem[Guo et~al.(2025)Guo, Tao, Luo, Dong, and Xu]{Guo2025}
+Haolan Guo, Linwei Tao, Haoyang Luo, Minjing Dong, and Chang Xu.
+\newblock Sample margin-aware recalibration of temperature scaling.
+\newblock \emph{ArXiv}, abs/2506.23492, 2025.
+\newblock \doi{10.48550/arXiv.2506.23492}.
+
+\bibitem[Tang et~al.(2025)Tang, Chen, and Cavallaro]{Tang2025}
+Yung-Chen Tang, Pin-Yu Chen, and Andrea Cavallaro.
+\newblock Carbon: Calibrated best-of-n sampling improves test-time reasoning.
+\newblock \emph{ArXiv}, abs/2510.15674, 2025.
+\newblock \doi{10.48550/arXiv.2510.15674}.
+
+\bibitem[Li and Liu(2025)]{Li2025}
+Tung-Ling Li and Hongliang Liu.
+\newblock Logit-gap steering: A forward-pass diagnostic for alignment
+  robustness.
+\newblock \emph{ArXiv}, abs/2506.24056, 2025.
+
+\bibitem[Renze and Guven(2024)]{Renze2024}
+Matthew Renze and Erhan Guven.
+\newblock The effect of sampling temperature on problem solving in large
+  language models.
+\newblock In \emph{Findings of the Conference on Empirical Methods in Natural
+  Language Processing}, 2024.
+\newblock \doi{10.18653/v1/2024.findings-emnlp.432}.
+
+\bibitem[Jin et~al.(2020)Jin, Pan, Oufattole, Weng, Fang, and
+  Szolovits]{Jin2020}
+Di~Jin, Eileen Pan, Nassim Oufattole, Wei-Hung Weng, Hanyi Fang, and Peter
+  Szolovits.
+\newblock What disease does this patient have? a large-scale open domain
+  question answering dataset from medical exams.
+\newblock In \emph{Applied Sciences}, 2020.
+\newblock \doi{10.20944/PREPRINTS202105.0498.V1}.
+
+\bibitem[Hendrycks et~al.(2021)Hendrycks, Burns, Basart, Zou, Mazeika, Song,
+  and Steinhardt]{Hendrycks2020}
+Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn
+  Song, and Jacob Steinhardt.
+\newblock Measuring massive multitask language understanding.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\end{thebibliography}

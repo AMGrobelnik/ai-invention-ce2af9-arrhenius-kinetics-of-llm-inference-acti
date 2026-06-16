@@ -1,0 +1,17 @@
+{
+  "title": "Arrhenius Kinetics of LLM Inference: Activation Energy Paper",
+  "summary": "Generated a complete 13-page two-column LaTeX paper on the Arrhenius inference framework for LLM temperature selection. The paper covers: (1) Introduction with framework motivation and compute comparison vs Wu et al./TURN; (2) Theoretical Framework with exact softmax-Arrhenius factorization derivation (Sections 2.1-2.4); (3) Formal Lean 4 Verification covering all 10 sorry-free theorems; (4) Experiments across 8 subsections including MMLU-Pro and ARC-Challenge results with tables and statistical details; (5) Related Work covering 6 research threads; (6) Discussion with deployment algorithm, future work, and limitations; (7) Conclusion; (8) References (12 entries). All 6 figures included as figure* environments (21:9 and 16:9 aspect ratios rendered full-width): fig1 (framework overview), fig2 (Arrhenius plot), fig3 (Lean theorem table), fig6 (mass diffusion scatter), fig4 (accuracy comparison bar chart), fig5 (Ea vs T_pref scatter). BibTeX fetched via Semantic Scholar for all 12 references (Wu 2025, Du ICML 2025, Renze 2024, Wang 2024, Tang 2025, Chauvin 2025, Li 2025, Hinton 2015, Bridle 1989, Jin 2020, Guo 2025, Hendrycks 2021). Tables 1-3 included inline. All GitHub code footnote URLs preserved. Compiled successfully with pdflatex+bibtex+pdflatex+pdflatex (4-step process); 0 citation errors (no ?? found); 13 pages, 10MB PDF. Visual review of all 13 pages confirmed clean layout, proper figure placement, readable two-column text, and correctly resolved numbered citations [1]-[12].",
+  "out_expected_files": {
+    "paper_tex_path": "paper.tex",
+    "paper_pdf_path": "paper.pdf",
+    "references_bib_path": "references.bib",
+    "figure_paths": [
+      "figures/fig1_v0.jpg",
+      "figures/fig2_v0.jpg",
+      "figures/fig3_v0.jpg",
+      "figures/fig4_v0.jpg",
+      "figures/fig5_v0.jpg",
+      "figures/fig6_v0.jpg"
+    ]
+  }
+}

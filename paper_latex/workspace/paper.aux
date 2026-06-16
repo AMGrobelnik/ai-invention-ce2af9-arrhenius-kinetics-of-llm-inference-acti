@@ -1,0 +1,94 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{Wu2025}
+\citation{Wu2025}
+\citation{Du2025}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{Wang2024}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Theoretical Framework}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Notation and Problem Setup}{2}{subsection.2.1}\protected@file@percent }
+\citation{Bridle1989}
+\citation{Hinton2015}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of the Arrhenius inference framework. Overconfident-error (OC) instances are identified via greedy decoding; a temperature sweep estimates the inference activation energy $E_a$; the threshold temperature $T_\text  {thresh} = E_a / \ln N$ determines the operating point. Comparison with prior work illustrates the compute trade-off: Wu et al.\ require 13,312 forward passes per question; TURN requires a multi-temperature entropy sweep across batches; the Arrhenius framework requires 350 samples for $E_a$ estimation or 1 logprob call under two-token dominance.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:overview}{{1}{3}{Overview of the Arrhenius inference framework. Overconfident-error (OC) instances are identified via greedy decoding; a temperature sweep estimates the inference activation energy $E_a$; the threshold temperature $T_\text {thresh} = E_a / \ln N$ determines the operating point. Comparison with prior work illustrates the compute trade-off: Wu et al.\ require 13,312 forward passes per question; TURN requires a multi-temperature entropy sweep across batches; the Arrhenius framework requires 350 samples for $E_a$ estimation or 1 logprob call under two-token dominance}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Arrhenius Derivation from Softmax}{3}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Three Precisely Defined Quantities}{3}{subsection.2.3}\protected@file@percent }
+\citation{Du2025}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Arrhenius plot for a representative phi-4/MMLU-Pro instance ($R^2 = 0.985$, $E_a = 0.127$, $\log A = -0.091$). \textit  {Left panel}: $\log P(\text  {correct}|T)$ plotted against $1/T$ over the temperature grid $\mathcal  {T} = \{0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0\}$; the linear Arrhenius fit ($-E_a/T + \log A$) is overlaid in red. \textit  {Right panel}: the same data in probability space ($P(\text  {correct})$ vs.\ $T$), showing the characteristic S-shaped rising limb. The slope magnitude $E_a$ is the inference activation energy; $T_\text  {thresh} = E_a/\ln (16) \approx 0.046$ marks the minimum temperature for BON-16 recovery.}}{4}{figure.2}\protected@file@percent }
+\newlabel{fig:arrhenius-plot}{{2}{4}{Arrhenius plot for a representative phi-4/MMLU-Pro instance ($R^2 = 0.985$, $E_a = 0.127$, $\log A = -0.091$). \textit {Left panel}: $\log P(\text {correct}|T)$ plotted against $1/T$ over the temperature grid $\mathcal {T} = \{0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0\}$; the linear Arrhenius fit ($-E_a/T + \log A$) is overlaid in red. \textit {Right panel}: the same data in probability space ($P(\text {correct})$ vs.\ $T$), showing the characteristic S-shaped rising limb. The slope magnitude $E_a$ is the inference activation energy; $T_\text {thresh} = E_a/\ln (16) \approx 0.046$ marks the minimum temperature for BON-16 recovery}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Threshold Temperature and Two Distinct $T_{\text  {TURN}}$ Quantities}{4}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Formal Verification in Lean\nobreakspace  {}4}{4}{section.3}\protected@file@percent }
+\citation{Wang2024}
+\citation{Chauvin2025}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Summary of the ten Lean\nobreakspace  {}4 + Mathlib theorems verified without admitted gaps (\texttt  {sorry}-free). Theorems 1--5 establish the exact Arrhenius factorization and error bounds; Theorems 6--9 provide structural guarantees on the operating window and approximation quality across the experimental temperature grid.}}{5}{figure.3}\protected@file@percent }
+\newlabel{fig:lean-theorems}{{3}{5}{Summary of the ten Lean~4 + Mathlib theorems verified without admitted gaps (\texttt {sorry}-free). Theorems 1--5 establish the exact Arrhenius factorization and error bounds; Theorems 6--9 provide structural guarantees on the operating window and approximation quality across the experimental temperature grid}{figure.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{5}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Dataset and Infrastructure}{5}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Pilot Gate}{6}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Arrhenius Fitting (C1: Statistically Indeterminate)}{6}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}$E_a$ vs.\ $\Delta $: Mass Diffusion Across Answer Options (C2)}{6}{subsection.4.4}\protected@file@percent }
+\citation{Du2025}
+\citation{Du2025}
+\citation{Du2025}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}$T_{\text  {thresh}}$ Lower Bound (C3, C4: Confirmed)}{7}{subsection.4.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Fraction of instances where simplified $T_\text  {thresh} = E_a/\ln N$ constitutes a valid lower bound on the empirical minimum temperature where $N \cdot P_\text  {emp}(T) \geq 1$. Wilson 95\% CIs. \textbf  {Note:} Theorem\nobreakspace  {}6 requires $N > K$; for MMLU-Pro ($K=10$), the formal guarantee applies only to the $N=16$ and $N=32$ rows. The $N=4$ ($K=10 > N=4$) and $N=8$ ($K=10 > N=8$) rows are empirical observations outside the theorem's precondition.}}{7}{table.1}\protected@file@percent }
+\newlabel{tab:thresh}{{1}{7}{Fraction of instances where simplified $T_\text {thresh} = E_a/\ln N$ constitutes a valid lower bound on the empirical minimum temperature where $N \cdot P_\text {emp}(T) \geq 1$. Wilson 95\% CIs. \textbf {Note:} Theorem~6 requires $N > K$; for MMLU-Pro ($K=10$), the formal guarantee applies only to the $N=16$ and $N=32$ rows. The $N=4$ ($K=10 > N=4$) and $N=8$ ($K=10 > N=8$) rows are empirical observations outside the theorem's precondition}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Temperature Selection Strategy (C7: Directionally Consistent, Statistically Underpowered)}{7}{subsection.4.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Best-of-16 accuracy on 30 valid OC instances from MMLU-Pro (phi-4), with 95\% Clopper-Pearson confidence intervals. Fixed $T=1.0$ is the primary zero-cost baseline (highlighted). All CP intervals overlap---differences are statistically indistinguishable at $n=30$. TURN-adapted is exploratory only\nobreakspace  {}\cite  {Du2025} (validated on generation tasks, not MCQA).}}{7}{table.2}\protected@file@percent }
+\newlabel{tab:accuracy}{{2}{7}{Best-of-16 accuracy on 30 valid OC instances from MMLU-Pro (phi-4), with 95\% Clopper-Pearson confidence intervals. Fixed $T=1.0$ is the primary zero-cost baseline (highlighted). All CP intervals overlap---differences are statistically indistinguishable at $n=30$. TURN-adapted is exploratory only~\cite {Du2025} (validated on generation tasks, not MCQA)}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Two-token dominance ($\rho (E_a, \Delta )$) as a function of the number of answer options $K$. \textit  {Left panel}: MMLU-Pro ($K=10$, $n=30$), where $\rho (E_a, \Delta ) = 0.106$ ($p=0.578$)---near-zero correlation, indicating mass diffusion across many answer options. \textit  {Right panel}: ARC-Challenge ($K=4$, $n=27$), where $\rho (E_a, \Delta ) = 0.936$ ($p=7.1 \times 10^{-13}$)---near-perfect two-token dominance. Both panels show model phi-4 via OpenRouter. The valid-fit rate increases from 19.9\% (MMLU-Pro) to 54\% (ARC-Challenge).}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:mass-diffusion}{{4}{8}{Two-token dominance ($\rho (E_a, \Delta )$) as a function of the number of answer options $K$. \textit {Left panel}: MMLU-Pro ($K=10$, $n=30$), where $\rho (E_a, \Delta ) = 0.106$ ($p=0.578$)---near-zero correlation, indicating mass diffusion across many answer options. \textit {Right panel}: ARC-Challenge ($K=4$, $n=27$), where $\rho (E_a, \Delta ) = 0.936$ ($p=7.1 \times 10^{-13}$)---near-perfect two-token dominance. Both panels show model phi-4 via OpenRouter. The valid-fit rate increases from 19.9\% (MMLU-Pro) to 54\% (ARC-Challenge)}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Best-of-16 accuracy on 30 valid OC instances from MMLU-Pro (phi-4), with 95\% Clopper-Pearson confidence intervals. Fixed $T=1.0$ (highlighted in blue) is the primary zero-cost baseline and outperforms the Arrhenius routing strategies. All confidence intervals overlap, indicating differences are not statistically distinguishable at $n=30$. TURN-adapted is exploratory only (validated on generation tasks, not MCQA).}}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:accuracy}{{5}{8}{Best-of-16 accuracy on 30 valid OC instances from MMLU-Pro (phi-4), with 95\% Clopper-Pearson confidence intervals. Fixed $T=1.0$ (highlighted in blue) is the primary zero-cost baseline and outperforms the Arrhenius routing strategies. All confidence intervals overlap, indicating differences are not statistically distinguishable at $n=30$. TURN-adapted is exploratory only (validated on generation tasks, not MCQA)}{figure.5}{}}
+\citation{Bridle1989}
+\citation{Hinton2015}
+\citation{Wu2025}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}$E_a$ Predicts Per-Question Temperature Preference (C6: Confirmed)}{9}{subsection.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8}Model-Class Sensitivity}{9}{subsection.4.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comparison across experimental conditions. Two-token dominance (TD) is confirmed only on ARC-Challenge $K=4$, where $\rho (E_a, \Delta )=0.936$. Valid-fit rate is primarily predicted by $E_a$ magnitude and $K$.}}{9}{table.3}\protected@file@percent }
+\newlabel{tab:crossbench}{{3}{9}{Comparison across experimental conditions. Two-token dominance (TD) is confirmed only on ARC-Challenge $K=4$, where $\rho (E_a, \Delta )=0.936$. Valid-fit rate is primarily predicted by $E_a$ magnitude and $K$}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Related Work}{9}{section.5}\protected@file@percent }
+\citation{Du2025}
+\citation{Guo2025}
+\citation{Tang2025}
+\citation{Li2025}
+\citation{Renze2024}
+\citation{Jin2020}
+\citation{Hendrycks2020}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Scatter plot of inference activation energy $E_a$ versus empirically preferred temperature $T_\text  {pref}$ for 30 valid phi-4/MMLU-Pro instances, colored by collapsed subject category (STEM: 12 instances, Social+Humanities: 13 instances, Other: 5 instances). Spearman $\rho = 0.674$ ($p = 4.5 \times 10^{-5}$); collapsed 3-category partial Spearman $\rho _\text  {partial} = 0.592$ ($p = 7.1 \times 10^{-4}$, df $= 27$). The 13 instances with $T_\text  {pref} = 1.0$ (43.3\%) are shown with dashed outlines; on these instances, Fixed $T=1.0$ achieves 100\% accuracy while $T_\text  {operating}$ achieves 84.6\%.}}{10}{figure.6}\protected@file@percent }
+\newlabel{fig:ea-tpref}{{6}{10}{Scatter plot of inference activation energy $E_a$ versus empirically preferred temperature $T_\text {pref}$ for 30 valid phi-4/MMLU-Pro instances, colored by collapsed subject category (STEM: 12 instances, Social+Humanities: 13 instances, Other: 5 instances). Spearman $\rho = 0.674$ ($p = 4.5 \times 10^{-5}$); collapsed 3-category partial Spearman $\rho _\text {partial} = 0.592$ ($p = 7.1 \times 10^{-4}$, df $= 27$). The 13 instances with $T_\text {pref} = 1.0$ (43.3\%) are shown with dashed outlines; on these instances, Fixed $T=1.0$ achieves 100\% accuracy while $T_\text {operating}$ achieves 84.6\%}{figure.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{11}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Interpreting the Results}{11}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Practical Deployment Algorithm}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Future Work}{11}{subsection.6.3}\protected@file@percent }
+\citation{Wu2025}
+\bibstyle{unsrtnat}
+\bibdata{references}
+\bibcite{Wu2025}{{1}{2025}{{Wu et~al.}}{{Wu, Mirhoseini, and Tambe}}}
+\bibcite{Du2025}{{2}{2025}{{Du et~al.}}{{Du, Yang, and Welleck}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Limitations}{12}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{12}{section.7}\protected@file@percent }
+\bibcite{Wang2024}{{3}{2024}{{Wang et~al.}}{{Wang, Ma, Zhang, Ni, Chandra, Guo, Ren, Arulraj, He, Jiang, Li, Ku, Wang, Zhuang, Fan, Yue, and Chen}}}
+\bibcite{Bridle1989}{{4}{1989}{{Bridle}}{{}}}
+\bibcite{Hinton2015}{{5}{2015}{{Hinton et~al.}}{{Hinton, Vinyals, and Dean}}}
+\bibcite{Chauvin2025}{{6}{2025}{{Chauvin et~al.}}{{Chauvin, Merrer, Ta{\"i}ani, and Tr{\'e}dan}}}
+\bibcite{Guo2025}{{7}{2025}{{Guo et~al.}}{{Guo, Tao, Luo, Dong, and Xu}}}
+\bibcite{Tang2025}{{8}{2025}{{Tang et~al.}}{{Tang, Chen, and Cavallaro}}}
+\bibcite{Li2025}{{9}{2025}{{Li and Liu}}{{}}}
+\bibcite{Renze2024}{{10}{2024}{{Renze and Guven}}{{}}}
+\bibcite{Jin2020}{{11}{2020}{{Jin et~al.}}{{Jin, Pan, Oufattole, Weng, Fang, and Szolovits}}}
+\bibcite{Hendrycks2020}{{12}{2021}{{Hendrycks et~al.}}{{Hendrycks, Burns, Basart, Zou, Mazeika, Song, and Steinhardt}}}
+\gdef \@abspage@last{13}
